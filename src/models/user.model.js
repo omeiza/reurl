@@ -1,7 +1,14 @@
 /**
  * Model: User
- * Table: Users
+ * Table: users
  * Author: https://github.com/omeiza
+ */
+
+
+/**
+ * @TODO
+ * 1. DB Table relation between user and authServices
+ * 2. Add Scope
  */
 
 const {DataTypes} = require('sequelize');
@@ -48,4 +55,6 @@ const User = sequelize.define(
             defaultValue: false
         }
     }
-)
+);
+
+module.exports = User;
