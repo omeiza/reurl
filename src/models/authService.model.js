@@ -40,6 +40,6 @@ const AuthService = sequelize.define(
 			allowNull: false
 		}
 	}
-)
+);
 
 module.exports = AuthService;
