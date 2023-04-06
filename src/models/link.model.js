@@ -4,7 +4,7 @@
  * Author: https://github.com/omeiza
  */
 
-const {DataTypes, Sequelize} = require('sequelize');
+const {DataTypes} = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
 const User = require("./user.model");
 

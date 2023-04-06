@@ -4,12 +4,6 @@
  * Author: https://github.com/omeiza
  */
 
-/**
- * @TODO
- * 1. DB Table relation between authServices and user
- * 2. Add Scope
- */
-
 const {DataTypes} = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
 const User = require('./user.model');
@@ -41,5 +35,10 @@ const AuthService = sequelize.define(
 		}
 	}
 );
+
+AuthService.associate = (models) => {
+	models.users.hasOne(AuthService, {foreignKey: 'userId'});
+	AuthService.belongsTo(models.users);
+}
 
 module.exports = AuthService;
