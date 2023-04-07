@@ -6,7 +6,8 @@
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
         "start": "node ./index.js",
-        "dev": "NODE_ENV=development nodemon -q ./index.js"
+        "dev": "NODE_ENV=development nodemon -q ./index.js",
+        "sync": "NODE_ENV=development nodemon -q ./scripts/syncDB.js"
     },
     "keywords": [],
     "author": "",
