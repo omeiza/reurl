@@ -1,7 +1,9 @@
 /**
  * Sync in all models to create and update databases
  * Author: https://github.com/omeiza
- * @TODO: Exit process after running script
+ * @TODO:
+ * 1. Exit process after running script
+ * 2. Allow drop database to drop all tables in database
  */
 
 require('../src/utils/env.util');
