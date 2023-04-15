@@ -1,14 +1,14 @@
 /**
- * Model: AuthService
+ * Model: AuthServices
  * Table: authServices
  * Author: https://github.com/omeiza
  */
 
 const {DataTypes} = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
-const User = require('./user.model');
+const User = require('./users.model');
 
-const AuthService = sequelize.define(
+const AuthServices = sequelize.define(
 	'authServices',
 	{
 		id: {
@@ -36,9 +36,9 @@ const AuthService = sequelize.define(
 	}
 );
 
-AuthService.associate = (models) => {
-	models.users.hasOne(AuthService, {foreignKey: 'userId'});
-	AuthService.belongsTo(models.users);
+AuthServices.associate = (models) => {
+	models.users.hasOne(AuthServices, {foreignKey: 'userId'});
+	AuthServices.belongsTo(models.users);
 }
 
-module.exports = AuthService;
+module.exports = AuthServices;

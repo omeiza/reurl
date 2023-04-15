@@ -5,11 +5,11 @@
  */
 
 const {DataTypes} = require('sequelize');
-const sequelize = require('../utils/sequelize.util');
-const User = require('./user.model');
 const { customAlphabet } = require('nanoid/async');
+const sequelize = require('../utils/sequelize.util');
+const User = require('./users.model');
 
-const Link = sequelize.define(
+const Links = sequelize.define(
 	'links',
 	{
 		id: {
@@ -49,4 +49,4 @@ const Link = sequelize.define(
 	}
 );
 
-module.exports = Link;
+module.exports = Links;

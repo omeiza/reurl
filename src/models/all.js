@@ -1,5 +1,7 @@
 const models = {
-    User: require('./user.model')
+    Users: require('./users.model'),
+    Links: require('./links.model'),
+    AuthServices: require('./authServices.model')
 }
 const associate = () => {
     const aliases = {};

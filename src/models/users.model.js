@@ -7,7 +7,7 @@
 const {DataTypes} = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
 
-const User = sequelize.define(
+const Users = sequelize.define(
     'users',
     {
         id: {
@@ -50,9 +50,9 @@ const User = sequelize.define(
     }
 );
 
-User.associate = (models) => {
-    User.hasMany(models.links, {foreignKey: 'userId'});
-    models.links.belongsTo(User, {foreignKey: 'userId', as: 'owner'})
+Users.associate = (models) => {
+    Users.hasMany(models.links, {foreignKey: 'userId'});
+    models.links.belongsTo(Users, {foreignKey: 'userId', as: 'owner'})
 }
 
-module.exports = User;
+module.exports = Users;

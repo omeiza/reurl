@@ -22,13 +22,20 @@ app.use('/auth', authRouter);
 // Cors
 app.use(cors());
 
-//Setup body parser
+// Setup body parser
 app.use(bodyParser.json());
 app.use(
 	bodyParser.urlencoded({
 		extended: true
 	})
 );
+
+// Index api route
+app.get('/', (req, res) => {
+	res.json({
+		message: 'Ok!'
+	})
+});
 
 // Error handling with express app middleware
 app.use((error, req, res, next) => {
