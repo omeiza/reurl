@@ -9,6 +9,6 @@ const linkController = require('../controllers/links.controller');
 
 // Get user links
 // @TODO: Setup middleware to ensure authentication and authorization
-// router.get('/', linkController.getMultipleLinks);
+router.get('/', linkController.getMultipleLinks);
 
 module.exports = router;
