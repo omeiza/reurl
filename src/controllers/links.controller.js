@@ -9,12 +9,12 @@ const linkControllers = {};
 /**
  * getMultipleLinks lists out links that matches a particular search criteria
  * The criteria are -> search query, count (perPage), page, status, order, orderBy
- * Returns a JSON of count, page, perPage, and links
+ * Returns an array of link objects
  * @param req
  * @param res
  * @return {JSON}
  * @TODO Sort out search using search query
- * @TODO Add orderByy and order to filter link search result
+ * @TODO Add orderBy and order to filter link search result
  */
 linkControllers.getMultipleLinks = (req, res) => {
 	try {
@@ -31,13 +31,13 @@ linkControllers.getMultipleLinks = (req, res) => {
 			where.status = req.query.status;
 		}
 
-		Links.unscoped().findAndCountAll(args)
+		Links.findAndCountAll(args)
 			.then(async linksCountAndRows => {
 				const {count, rows} = linksCountAndRows;
 
 				if (count < 1) {
 					return res.status(404).json({
-						status: "Not found!"
+						status: "No record found"
 					});
 				}
 
@@ -52,15 +52,41 @@ linkControllers.getMultipleLinks = (req, res) => {
 				res.status(500).json({
 					status: 'Error fetching links',
 					error: error.message
-				})
+				});
 			});
 	} catch (exceptionErr) {
 		console.error('Exception error -> ', exceptionErr.message);
 	}
 }
 
+/**
+ * getLink gets a single link
+ * Returns a link
+ * @param req
+ * @param res
+ * @return {JSON}
+ */
 linkControllers.getLink = (req, res) => {
+	try {
+		Links.findByPk(req.params.id)
+			.then(link => {
+				if (!link || link.length === 0) {
+					return res.status(404).json({
+						status: 'No record found'
+					});
+				}
 
+				return res.json(link);
+			})
+			.catch(error => {
+				res.status(500).json({
+					status: 'Error fetching links',
+					error: error.message
+				});
+			})
+	} catch (exceptionErr) {
+		console.error('Exception error -> ', exceptionErr.message);
+	}
 }
 
 module.exports = linkControllers;
