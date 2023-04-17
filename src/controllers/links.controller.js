@@ -35,12 +35,18 @@ linkControllers.getMultipleLinks = (req, res) => {
 			.then(async linksCountAndRows => {
 				const {count, rows} = linksCountAndRows;
 
+				if (count < 1) {
+					return res.status(404).json({
+						status: "Not found!"
+					});
+				}
+
 				return res.json({
 					count: count,
 					page: page,
 					perPage: perPage,
 					links: rows
-				})
+				});
 			})
 			.catch(error => {
 				res.status(500).json({
@@ -51,6 +57,10 @@ linkControllers.getMultipleLinks = (req, res) => {
 	} catch (exceptionErr) {
 		console.error('Exception error -> ', exceptionErr.message);
 	}
+}
+
+linkControllers.getLink = (req, res) => {
+
 }
 
 module.exports = linkControllers;
