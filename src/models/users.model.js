@@ -6,6 +6,7 @@
 
 const {DataTypes} = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
+const { hash } = require('../utils/helper.util');
 
 const Users = sequelize.define(
     'users',
@@ -27,7 +28,7 @@ const Users = sequelize.define(
             type: DataTypes.STRING,
             allowNull: true,
             set(value) {
-                // this.setDataValue('passwordHash', hash(value))
+                this.setDataValue('passwordHash', hash(value))
             }
         },
         username: {
@@ -49,6 +50,16 @@ const Users = sequelize.define(
         }
     }
 );
+
+Users.addScope('public', {
+    attributes: [ 'id', 'email', 'username', 'isAdmin', 'isActive']
+});
+
+Users.addScope('protected', {
+    attributes: {
+        exclude: [ 'passwordHash', 'apiKey' ]
+    }
+});
 
 Users.associate = (models) => {
     Users.hasMany(models.links, {foreignKey: 'userId'});
