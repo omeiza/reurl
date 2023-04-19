@@ -89,4 +89,44 @@ linkControllers.getLink = (req, res) => {
 	}
 }
 
+/**
+ * createLink creates a short link
+ * Returns the newly created short link id
+ * @param req
+ * @param res
+ * @return {JSON}
+ */
+linkControllers.createLink = (req, res) => {
+	try {
+		Links.build({
+			userId: req.user.id,
+			url: req.body.url
+		})
+			.save()
+			.then(result => {
+				if (!result) {
+					return req.status(500).json({
+						status: 'Error adding link'
+					});
+				}
+
+				return result;
+			})
+			.then((link) => {
+				const linkObj = link.get({ plain: true });
+				return res.json({
+					id: linkObj.id
+				})
+			})
+			.catch(error => {
+				return res.status(500).json({
+					status: 'Error adding link',
+					error: error.message
+				})
+			})
+	} catch (exceptionErr) {
+		console.error('Exception error -> ', exceptionErr.message);
+	}
+}
+
 module.exports = linkControllers;

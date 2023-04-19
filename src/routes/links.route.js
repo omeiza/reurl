@@ -19,4 +19,10 @@ router.get('/', linkController.getMultipleLinks);
  */
 router.get('/:id', linkController.getLink);
 
+/**
+ * Create new link
+ * @TODO: Setup middleware to ensure authentication and authorization
+ */
+router.put('/', linkController.createLink);
+
 module.exports = router;
