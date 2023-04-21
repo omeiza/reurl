@@ -6,7 +6,7 @@
 
 const {DataTypes} = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
-const { hash } = require('../utils/helper.util');
+const { hash, generateKey } = require('../utils/helper.util');
 
 const Users = sequelize.define(
     'users',
@@ -38,7 +38,8 @@ const Users = sequelize.define(
         },
         apiKey: {
             type: DataTypes.STRING,
-            allowNull: true
+            allowNull: true,
+            defaultValue: generateKey()
         },
         isAdmin: {
             type: DataTypes.BOOLEAN,

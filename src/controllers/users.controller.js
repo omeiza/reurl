@@ -5,15 +5,15 @@
 
 const Users = require('../models/users.model');
 const authServices = require("../models/authServices.model");
-const userControllers = {};
+const userController = {};
 
 /**
  * @param req
  * @param res
  * @return {Promise<*>}
  */
-userControllers.signup = async (req, res) => {
-	console.log(req.body);
+userController.signup = async (req, res) => {
+	// console.log(req);
 	try {
 		const [user, created] = Users.findOrCreate({
 			where: { email: req.body.email },
@@ -24,7 +24,9 @@ userControllers.signup = async (req, res) => {
 			}
 		});
 
+		console.log("a", created);
 		if (created) {
+			console.log("b");
 			await authServices.create({
 				userId: user.userId,
 				providerIdentifier: user.email
@@ -43,4 +45,4 @@ userControllers.signup = async (req, res) => {
 	}
 }
 
-module.exports = userControllers;
+module.exports = userController;
