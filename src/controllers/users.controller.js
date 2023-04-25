@@ -25,7 +25,7 @@ userController.signup = async (req, res) => {
 
 		if (created) {
 			await authServices.create({
-				userId: user.userId,
+				userId: user.id,
 				providerIdentifier: user.email
 			});
 

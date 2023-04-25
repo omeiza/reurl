@@ -19,6 +19,7 @@ const AuthServices = sequelize.define(
 		},
 		userId: {
 			type: DataTypes.INTEGER,
+			allowNull: false,
 			references: {
 				key: 'id',
 				model: User
