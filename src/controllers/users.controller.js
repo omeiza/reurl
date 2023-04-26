@@ -9,6 +9,7 @@ const authServices = require("../models/authServices.model");
 const userController = {};
 
 /**
+ * Add new user
  * @param req
  * @param res
  * @return {Promise<*>}
@@ -43,6 +44,12 @@ userController.signup = async (req, res) => {
 	}
 }
 
+/**
+ * Get existing user
+ * @param req
+ * @param res
+ * @return {Promise<*>}
+ */
 userController.getUser = async (req, res) => {
 	try {
 		const username = (req.params.username).toLowerCase();
@@ -53,17 +60,16 @@ userController.getUser = async (req, res) => {
 		}
 
 		const user = await Users.scope('public').findByPk(req.user.id);
-		const {count, links} = await Links.findAndCountAll({
+		const {count, rows} = await Links.findAndCountAll({
 			where: {
-				userId: req.user.id,
-
+				userId: req.user.id
 			}
 		});
 
 		const userLinks = {};
 		if (count > 0) {
 			userLinks.count = count;
-			userLinks.items = links;
+			userLinks.items = rows;
 		}
 
 		return res.json({ ...user.toJSON(), links: userLinks});

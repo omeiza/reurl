@@ -5,7 +5,6 @@
  */
 
 const {DataTypes} = require('sequelize');
-const { customAlphabet } = require('nanoid/async');
 const sequelize = require('../utils/sequelize.util');
 const User = require('./users.model');
 
@@ -16,11 +15,7 @@ const Links = sequelize.define(
 			type: DataTypes.STRING,
 			primaryKey: true,
 			allowNull: false,
-			unique: true,
-			defaultValue: async () => {
-				const nanoid = customAlphabet('1234567890abcdefgh', 10);
-				return await nanoid();
-			},
+			unique: true
 		},
 		userId: {
 			type: DataTypes.INTEGER,

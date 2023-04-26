@@ -6,6 +6,7 @@
 const express = require('express');
 const router = express.Router();
 const linkController = require('../controllers/links.controller');
+const authenticate = require('../middlewares/authenticate.middleware');
 
 /**
  * Get user links
@@ -21,8 +22,7 @@ router.get('/:id', linkController.getLink);
 
 /**
  * Create new link
- * @TODO: Setup middleware to ensure authentication and authorization
  */
-router.put('/', linkController.createLink);
+router.put('/', authenticate, linkController.addLink);
 
 module.exports = router;

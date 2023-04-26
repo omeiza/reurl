@@ -52,4 +52,13 @@ helpers.generateKey = (count = 32) => {
 	return (new Date()).getTime().toString(36) + helpers.generateRandomString(count);
 }
 
+/**
+ * @TODO: Ensure ID generated is unique
+ * @param count
+ * @return {boolean|string}
+ */
+helpers.uniqueID = (count) => {
+	return helpers.generateRandomString(count);
+}
+
 module.exports = helpers;

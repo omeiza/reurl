@@ -3,6 +3,7 @@
  * Author: https://github.com/omeiza
  */
 
+const { uniqueID } = require('../utils/helper.util');
 const Links = require('../models/links.model');
 const linkControllers = {};
 
@@ -80,7 +81,7 @@ linkControllers.getLink = (req, res) => {
 			})
 			.catch(error => {
 				res.status(500).json({
-					status: 'Error fetching links',
+					status: 'Error fetching link',
 					error: error.message
 				});
 			})
@@ -96,22 +97,14 @@ linkControllers.getLink = (req, res) => {
  * @param res
  * @return {JSON}
  */
-linkControllers.createLink = (req, res) => {
+linkControllers.addLink = (req, res) => {
 	try {
 		Links.build({
+			id: uniqueID(6),
 			userId: req.user.id,
 			url: req.body.url
 		})
 			.save()
-			.then(result => {
-				if (!result) {
-					return req.status(500).json({
-						status: 'Error adding link'
-					});
-				}
-
-				return result;
-			})
 			.then((link) => {
 				const linkObj = link.get({ plain: true });
 				return res.json({
