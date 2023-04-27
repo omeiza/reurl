@@ -7,16 +7,15 @@ const express = require('express');
 const router = express.Router();
 const linkController = require('../controllers/links.controller');
 const authenticate = require('../middlewares/authenticate.middleware');
+const authorize = require('../middlewares/authorize.middleware');
 
 /**
- * Get user links
- * @TODO: Setup middleware to ensure authentication and authorization
+ * Get links
  */
-router.get('/', linkController.getMultipleLinks);
+router.get('/', authenticate, linkController.getMultipleLinks);
 
 /**
  * Get specific link
- * @TODO: Setup middleware to ensure authentication and authorization
  */
 router.get('/:id', linkController.getLink);
 
@@ -24,5 +23,10 @@ router.get('/:id', linkController.getLink);
  * Create new link
  */
 router.put('/', authenticate, linkController.addLink);
+
+/**
+ * Update link
+ */
+router.post('/:id', authenticate, authorize.links, linkController.updateLink);
 
 module.exports = router;

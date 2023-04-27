@@ -91,7 +91,7 @@ linkControllers.getLink = (req, res) => {
 }
 
 /**
- * createLink creates a short link
+ * Creates a short link
  * Returns the newly created short link id
  * @param req
  * @param res
@@ -117,6 +117,39 @@ linkControllers.addLink = (req, res) => {
 					error: error.message
 				})
 			})
+	} catch (exceptionErr) {
+		console.error('Exception error -> ', exceptionErr.message);
+	}
+}
+
+/**
+ * Updates existing link
+ * @param req
+ * @param res
+ * @return {void}
+ */
+linkControllers.updateLink = (req, res) => {
+	try {
+		const args = {};
+		if (req.body.status) args.status = req.body.status;
+		if (req.body.url) args.url = req.body.url;
+
+		Links.update(args, {
+			where: {
+				id: req.params.id
+			}
+		})
+			.then(() => {
+				return res.json({
+					status: 'Ok'
+				});
+			})
+			.catch(error => {
+				return res.status(500).json({
+					status: 'Error updating link',
+					error: error.message
+				})
+			});
 	} catch (exceptionErr) {
 		console.error('Exception error -> ', exceptionErr.message);
 	}

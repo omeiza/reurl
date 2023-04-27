@@ -32,3 +32,5 @@ authorize.links = async (req, res, next) => {
 		console.error('Exception error ->', exceptionErr.message);
 	}
 }
+
+module.exports = authorize;
