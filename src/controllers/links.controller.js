@@ -124,7 +124,7 @@ linkControllers.addLink = (req, res) => {
 }
 
 /**
- * Updates existing link
+ * Update specific link
  * @param req
  * @param res
  * @return {void}
@@ -156,6 +156,12 @@ linkControllers.updateLink = (req, res) => {
 	}
 }
 
+/**
+ * Delete specific link
+ * @param req
+ * @param res
+ * @return {void}
+ */
 linkControllers.deleteLink = (req, res) => {
 	try {
 		Links.destroy({
