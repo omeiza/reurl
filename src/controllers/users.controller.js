@@ -6,6 +6,7 @@
 const Users = require('../models/users.model');
 const Links = require('../models/links.model');
 const authServices = require("../models/authServices.model");
+const { hash, generateKey } = require("../utils/helper.util");
 const userController = {};
 
 /**
@@ -39,6 +40,53 @@ userController.signup = async (req, res) => {
 		return res.status(400).json({
 			status: "User already exist",
 		});
+	} catch (exceptionErr) {
+		console.error('Exception error ->', exceptionErr.message);
+	}
+}
+
+/**
+ * Login
+ * @param req
+ * @param res
+ * @return {JSON}
+ */
+userController.login = async (req, res) => {
+	try {
+		const args = {};
+		if (req.body.username) args.username = req.body.username;
+		if (req.body.email) args.email = req.body.email;
+
+		Users.findOne({
+			where: args
+		})
+			.then(async user => {
+				if (!user) {
+					return res.status(401).send({
+						status: 'Access denied'
+					});
+				}
+
+				const userObject = user.get({ plain: true });
+				if (hash(req.body.password) !== userObject.passwordHash) {
+					return res.status(401).send({
+						status: 'Access denied'
+					});
+				}
+
+				const newKey = generateKey();
+				await Users.update({
+					apiKey: newKey
+				}, {
+					where: {
+						id: userObject.id
+					}
+				});
+
+				return res.json({
+					apiKey: newKey
+				});
+			});
 	} catch (exceptionErr) {
 		console.error('Exception error ->', exceptionErr.message);
 	}

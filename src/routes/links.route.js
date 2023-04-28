@@ -9,29 +9,19 @@ const linkController = require('../controllers/links.controller');
 const authenticate = require('../middlewares/authenticate.middleware');
 const authorize = require('../middlewares/authorize.middleware');
 
-/**
- * Get links
- */
+// Get links
 router.get('/', authenticate, linkController.getMultipleLinks);
 
-/**
- * Get specific link
- */
+// Get specific link
 router.get('/:id', linkController.getLink);
 
-/**
- * Create new link
- */
+// Create new link
 router.put('/', authenticate, linkController.addLink);
 
-/**
- * Update link
- */
+// Update link
 router.post('/:id', [authenticate, authorize.links], linkController.updateLink);
 
-/**
- * Delete link
- */
+// Delete link
 router.delete('/:id', [authenticate, authorize.links], linkController.deleteLink);
 
 module.exports = router;

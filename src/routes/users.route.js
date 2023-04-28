@@ -8,9 +8,6 @@ const router = express.Router();
 const userController = require('../controllers/users.controller');
 const authenticate = require('../middlewares/authenticate.middleware');
 
-// Add new user
-router.put('/', userController.signup);
-
 // Get authenticated user details
 router.get('/:username', authenticate, userController.getUser);
 
