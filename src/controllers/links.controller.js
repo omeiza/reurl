@@ -5,6 +5,7 @@
 
 const { uniqueID } = require('../utils/helper.util');
 const Links = require('../models/links.model');
+const {where} = require("sequelize");
 const linkControllers = {};
 
 /**
@@ -147,6 +148,29 @@ linkControllers.updateLink = (req, res) => {
 			.catch(error => {
 				return res.status(500).json({
 					status: 'Error updating link',
+					error: error.message
+				})
+			});
+	} catch (exceptionErr) {
+		console.error('Exception error -> ', exceptionErr.message);
+	}
+}
+
+linkControllers.deleteLink = (req, res) => {
+	try {
+		Links.destroy({
+			where: {
+				id: req.params.id
+			}
+		})
+			.then((a) => {
+				return res.json({
+					status: "Ok"
+				})
+			})
+			.catch(error => {
+				return res.status(500).json({
+					status: 'Error deleting link',
 					error: error.message
 				})
 			});

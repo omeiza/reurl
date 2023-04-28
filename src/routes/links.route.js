@@ -27,6 +27,11 @@ router.put('/', authenticate, linkController.addLink);
 /**
  * Update link
  */
-router.post('/:id', authenticate, authorize.links, linkController.updateLink);
+router.post('/:id', [authenticate, authorize.links], linkController.updateLink);
+
+/**
+ * Delete link
+ */
+router.delete('/:id', [authenticate, authorize.links], linkController.deleteLink);
 
 module.exports = router;
