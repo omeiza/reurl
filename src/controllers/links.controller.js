@@ -5,7 +5,6 @@
 
 const { uniqueID } = require('../utils/helper.util');
 const Links = require('../models/links.model');
-const {where} = require("sequelize");
 const linkControllers = {};
 
 /**
@@ -23,7 +22,7 @@ linkControllers.getMultipleLinks = (req, res) => {
 		const perPage = req.query.count ? parseInt(req.query.count) : 8;
 		const page = req.query.page ? parseInt(req.query.page) : 1;
 
-		const where = {};
+		const where = { userId: req.user.id };
 		const args = {
 			limit: perPage,
 			offset: perPage * (page - 1)
@@ -33,6 +32,13 @@ linkControllers.getMultipleLinks = (req, res) => {
 			where.status = req.query.status;
 		}
 
+		// @TODO: Search
+		if (req.query.search) {
+			const search = req.query.search.toLowerCase();
+
+		}
+
+		args.where = where;
 		Links.findAndCountAll(args)
 			.then(async linksCountAndRows => {
 				const {count, rows} = linksCountAndRows;
