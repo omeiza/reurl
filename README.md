@@ -1,5 +1,6 @@
 # URL Shortener
-A Node.js backend service for a URL shortener. It allows user authentication and allow authenticated user to create a URL, edit a URL, and delete a URL.\
+A Node.js backend service for a URL shortener. It allows user authentication and allow authenticated user to create a URL, edit a URL, and delete a URL.
+
 This was created for learning purpose and can be used as such by anyone.
 
 ## Tools
