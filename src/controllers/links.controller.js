@@ -5,6 +5,8 @@
 
 const { uniqueID } = require('../utils/helper.util');
 const Links = require('../models/links.model');
+const Sequelize = require('sequelize');
+const Op = Sequelize.Op;
 const linkControllers = {};
 
 /**
@@ -14,8 +16,6 @@ const linkControllers = {};
  * @param req
  * @param res
  * @return {JSON}
- * @TODO Sort out search using search query
- * @TODO Add orderBy and order to filter link search result
  */
 linkControllers.getMany = (req, res) => {
 	try {
@@ -32,10 +32,12 @@ linkControllers.getMany = (req, res) => {
 			where.status = req.query.status;
 		}
 
-		// @TODO: Search
 		if (req.query.search) {
 			const search = req.query.search.toLowerCase();
 
+			where.url = {
+				[Op.like]: `%${search}%`
+			}
 		}
 
 		args.where = where;
