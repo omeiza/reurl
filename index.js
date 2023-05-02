@@ -53,7 +53,7 @@ app.use((error, req, res, next) => {
 				console.log('Database connection has been established successfully');
 
 				app.listen(port, () => {
-					console.log(`Shortner app listening on port ${port}`);
+					console.log(`Shortener app listening on port ${port}`);
 				});
 			});
 	} catch (error) {
