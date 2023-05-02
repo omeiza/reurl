@@ -13,7 +13,7 @@ const userController = {};
  * @param res
  * @return {Promise<*>}
  */
-userController.getUser = async (req, res) => {
+userController.get = async (req, res) => {
 	try {
 		const username = (req.params.username).toLowerCase();
 		if (username !== req.user.username) {

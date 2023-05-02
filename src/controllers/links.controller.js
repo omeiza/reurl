@@ -17,7 +17,7 @@ const linkControllers = {};
  * @TODO Sort out search using search query
  * @TODO Add orderBy and order to filter link search result
  */
-linkControllers.getMultipleLinks = (req, res) => {
+linkControllers.getMany = (req, res) => {
 	try {
 		const perPage = req.query.count ? parseInt(req.query.count) : 8;
 		const page = req.query.page ? parseInt(req.query.page) : 1;
@@ -74,7 +74,7 @@ linkControllers.getMultipleLinks = (req, res) => {
  * @param res
  * @return {JSON}
  */
-linkControllers.getLink = (req, res) => {
+linkControllers.get = (req, res) => {
 	try {
 		Links.findByPk(req.params.id)
 			.then(link => {
@@ -104,7 +104,7 @@ linkControllers.getLink = (req, res) => {
  * @param res
  * @return {JSON}
  */
-linkControllers.addLink = (req, res) => {
+linkControllers.add = (req, res) => {
 	try {
 		Links.build({
 			id: uniqueID(6),
@@ -135,7 +135,7 @@ linkControllers.addLink = (req, res) => {
  * @param res
  * @return {void}
  */
-linkControllers.updateLink = (req, res) => {
+linkControllers.update = (req, res) => {
 	try {
 		const args = {};
 		if (req.body.status) args.status = req.body.status;
@@ -168,7 +168,7 @@ linkControllers.updateLink = (req, res) => {
  * @param res
  * @return {void}
  */
-linkControllers.deleteLink = (req, res) => {
+linkControllers.delete = (req, res) => {
 	try {
 		Links.destroy({
 			where: {

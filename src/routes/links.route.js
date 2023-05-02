@@ -10,18 +10,18 @@ const authenticate = require('../middlewares/authenticate.middleware');
 const authorize = require('../middlewares/authorize.middleware');
 
 // Get links
-router.get('/', authenticate, linkController.getMultipleLinks);
+router.get('/', authenticate, linkController.getMany);
 
 // Get specific link
-router.get('/:id', linkController.getLink);
+router.get('/:id', linkController.get);
 
 // Create new link
-router.put('/', authenticate, linkController.addLink);
+router.put('/', authenticate, linkController.add);
 
 // Update link
-router.post('/:id', [authenticate, authorize.links], linkController.updateLink);
+router.post('/:id', [authenticate, authorize.links], linkController.update);
 
 // Delete link
-router.delete('/:id', [authenticate, authorize.links], linkController.deleteLink);
+router.delete('/:id', [authenticate, authorize.links], linkController.delete);
 
 module.exports = router;
