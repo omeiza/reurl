@@ -10,7 +10,7 @@ const Op = Sequelize.Op;
 const linkControllers = {};
 
 /**
- * getMultipleLinks lists out links that matches a particular search criteria
+ * getMany lists out links that matches a particular search criteria
  * The criteria are -> search query, count (perPage), page, status, order, orderBy
  * Returns an array of link objects
  * @param req
