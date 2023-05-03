@@ -5,7 +5,7 @@ This was created for learning purpose and can be used as such by anyone.
 
 ## Tools
 -   Node.js (v18.2)
--   [sequelize ORM (v6)](https://sequelize.org/)
+-   [Sequelize ORM (v6)](https://sequelize.org/)
 -   MySQL (v8)
 
 ## Installation
@@ -30,5 +30,6 @@ CHAR_TO_PICKFROM=abcdefghijklmnopqrstuvwxyz0123456789
 ```
 
 ## Run application
+-   Run `npm run sync` to create the required database tables 
 -   Run `npm run dev`
 -   Let's go!
