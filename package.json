@@ -1,7 +1,7 @@
 {
-    "name": "shortener-backend-node",
+    "name": "url-shortener-backend",
     "version": "1.0.0",
-    "description": "Backend services for a link shortener",
+    "description": "Backend services for a link shortener using Node.js",
     "main": "index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
