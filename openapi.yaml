@@ -1,0 +1,160 @@
+openapi: 3.0.3
+info:
+  title: URL Shortener API
+  description: API for URL Shortener
+  contact:
+    name: omeiza
+    email: owudaomeiza@gmail.com
+  version: "1.0"
+paths:
+  # Links
+  /links:
+    get:
+      description: Get links
+      parameters:
+        - &count
+          name: count
+          in: query
+          description: count per page
+          schema:
+            type: integer
+            minimum: 1
+            maximum: 50
+            default: 24
+        - &page
+          name: page
+          in: query
+          description: page
+          schema:
+            type: integer
+            minimum: 1
+            default: 1
+        - name: status
+          in: query
+          description: Link status
+          schema:
+            type: string
+            enum:
+              - all
+              - published
+              - approved
+              - rejected
+            default: all
+        - name: order
+          in: query
+          description: Order of memes search result
+          schema:
+            type: string
+            enum:
+              - asc
+              - desc
+            default: desc
+        - name: orderBy
+          in: query
+          description: Field to order by
+          schema:
+            type: string
+            enum:
+              - createdAt
+              - updatedAt
+              - viewCount
+            default: updatedAt
+        - name: q
+          in: query
+          description: Search query text
+          schema:
+            type: string
+      responses:
+        200:
+          description: List of user links
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/links"
+        403:
+          $ref: "#/components/responses/authentication"
+        404:
+          $ref: "#/components/responses/notFound"
+
+
+# Components
+components:
+  responses:
+    ok:
+      description: "Success"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+    invalidRequest:
+      description: "Bad Request"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+    authentication:
+      description: "Access denied"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+    forbidden:
+      description: "Forbidden Request"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+    notFound:
+      description: "Resource not found"
+      content:
+        application/json:
+          schema:
+            type: object
+            properties:
+              status:
+                type: string
+  schemas:
+    links:
+      type: object
+      properties:
+        count:
+          type: integer
+        page:
+          type: integer
+        perPage:
+          type: integer
+        links:
+          type: array
+          items:
+            $ref: "#/components/schemas/link"
+    link:
+      type: object
+      properties:
+        id:
+          type: string
+        userId:
+          type: integer
+        url:
+          type: string
+        viewCount:
+          type: integer
+        status:
+          type: string
+        createdAt:
+          type: string
+          format: 'date-time'
+        updatedAt:
+          type: string
+          format: 'date-time'

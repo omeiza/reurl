@@ -3,9 +3,9 @@ const models = require('./src/models');
 const userRouter = require('./src/routes/users.route');
 const linkRouter = require('./src/routes/links.route');
 const authRouter = require('./src/routes/auth.route');
-const express = require('express');
 const bodyParser = require('body-parser');
 const cors = require('cors');
+const express = require('express');
 const app = express();
 const port = process.env.PORT ?? '3001';
 
@@ -29,8 +29,6 @@ app.use(
 app.use('/users', userRouter);
 app.use('/links', linkRouter);
 app.use('/auth', authRouter);
-
-// Index api route
 app.get('/', (req, res) => {
 	res.json({
 		message: 'Ok!'
