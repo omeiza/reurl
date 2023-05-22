@@ -2,11 +2,11 @@
     "name": "url-shortener-backend",
     "version": "1.0.0",
     "description": "Backend services for a link shortener using Node.js",
-    "main": "index.js",
+    "main": "src/index.js",
     "scripts": {
         "test": "echo \"Error: no test specified\" && exit 1",
-        "start": "node ./index.js",
-        "dev": "NODE_ENV=development nodemon ./index.js",
+        "start": "node ./src/index.js",
+        "dev": "NODE_ENV=development nodemon ./src/index.js",
         "sync": "NODE_ENV=development nodemon ./scripts/syncDB.js"
     },
     "keywords": [],
