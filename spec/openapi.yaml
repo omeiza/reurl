@@ -9,6 +9,13 @@ info:
 paths:
   # Links
   /links:
+    parameters:
+      - in: header
+        name: x-api-key
+        description: API Key
+        required: true
+        schema:
+          type: string
     get:
       description: Get links
       parameters:
@@ -71,12 +78,104 @@ paths:
             application/json:
               schema:
                 $ref: "#/components/schemas/links"
-        403:
+        401:
           $ref: "#/components/responses/authentication"
+        403:
+          $ref: "#/components/responses/forbidden"
         404:
           $ref: "#/components/responses/notFound"
-
-
+    put:
+      description: Add new link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - url
+              properties:
+                url:
+                  type: string
+                  format: uri
+      responses:
+        200:
+          description: Link id
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  id:
+                    type: string
+        401:
+          $ref: "#/components/responses/authentication"
+        403:
+          $ref: "#/components/responses/forbidden"
+  /links/{id}:
+    parameters:
+      - in: header
+        name: x-api-key
+        description: API Key
+        required: true
+        schema:
+          type: string
+      - name: id
+        in: path
+        description: Link id
+        required: true
+        schema:
+          type: string
+    get:
+      description: Get specific link
+      responses:
+        200:
+          description: Link details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/link"
+        401:
+          $ref: "#/components/responses/authentication"
+        403:
+          $ref: "#/components/responses/forbidden"
+        404:
+          $ref: "#/components/responses/notFound"
+    post:
+      description: Update specific link
+      requestBody:
+        content:
+          application/json:
+            schema:
+              type: object
+              required:
+                - url
+              properties:
+                url:
+                  type: string
+      responses:
+        200:
+          description: Link details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/link"
+        401:
+          $ref: "#/components/responses/authentication"
+        403:
+          $ref: "#/components/responses/forbidden"
+        404:
+          $ref: "#/components/responses/notFound"
+    delete:
+      description: Delete specific link
+      responses:
+        200:
+          $ref: "#/components/responses/ok"
+        401:
+          $ref: "#/components/responses/authentication"
+        403:
+          $ref: "#/components/responses/forbidden"
+        404:
+          $ref: "#/components/responses/notFound"
 # Components
 components:
   responses:
