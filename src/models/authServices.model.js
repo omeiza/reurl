@@ -42,4 +42,13 @@ AuthServices.associate = (models) => {
 	AuthServices.belongsTo(models.users);
 }
 
+AuthServices.getUserByProvider = function(providerType, id) {
+	return AuthServices.findOne({
+		where: {
+			providerName: providerType,
+			providerIdentifier: id
+		}
+	})
+}
+
 module.exports = AuthServices;

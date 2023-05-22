@@ -1,8 +1,9 @@
 require('./utils/env.util.js');
 require("./routes/index");
+
 const models = require('./models');
 const app = require("./app");
-const port = process.env.PORT ?? '3001';
+const port = process.env.PORT ?? '4001';
 
 (async () => {
 	try {

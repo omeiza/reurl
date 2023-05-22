@@ -4,7 +4,7 @@
  */
 
 const Users = require('../models/users.model');
-const authServices = require("../models/authServices.model");
+const AuthServices = require("../models/authServices.model");
 const { hash, generateKey } = require("../utils/helper.util");
 const authController = {};
 
@@ -26,7 +26,7 @@ authController.signup = async (req, res) => {
 		});
 
 		if (created) {
-			await authServices.create({
+			await AuthServices.create({
 				userId: user.id,
 				providerIdentifier: user.email
 			});
@@ -89,6 +89,84 @@ authController.login = async (req, res) => {
 	} catch (exceptionErr) {
 		console.error('Exception error ->', exceptionErr.message);
 	}
+}
+
+authController.twitter = async (token, tokenSecret, profile, done) => {
+	AuthServices.getUserByProvider('twitter', profile.id)
+		.then(async (result) => {
+			const authProvider = result.get({ plain: true });
+			const newAPIKey = generateKey();
+			await Users.update({apiKey: newAPIKey}, {
+				where: {
+					id: authProvider.userId
+				},
+			});
+
+			const user = await Users.findByPk(authProvider.userId);
+			done(null, user.apiKey);
+		})
+
+	const apikey = generateKey();
+	const signupData = {
+		email: profile._json.email,
+		apiKey: apikey,
+		username: `${profile._json.screen_name.toLowerCase()}`,
+		isVerified: true
+	};
+
+	await Users.build(signupData).save()
+		.then(async (newUser) => {
+			await AuthServices.create({
+				userId: newUser.id,
+				providerName: 'twitter',
+				providerIdentifier: profile.id
+			});
+
+			const userObject = newUser.get({plain: true});
+			done(null, userObject.apiKey);
+		})
+
+	done(null, false);
+}
+
+authController.google = async (token, tokenSecret, profile, done) => {
+	AuthServices.getUserByProvider('google', profile.id)
+		.then(async (result) => {
+			const authProvider = result.get({ plain: true });
+
+			// Update the user with a new api key
+			const newAPIKey = generateKey();
+			await Users.update({apiKey: newAPIKey}, {
+				where: {
+					id: authProvider.userId
+				},
+			});
+
+			const user = await Users.findByPk(authProvider.userId);
+			done(null, user.apiKey);
+		});
+
+	const apikey = generateKey();
+	const signupData = {
+		email: profile._json.email,
+		apiKey: apikey,
+		username: `${profile._json.given_name.toLowerCase()}${profile._json.family_name.toLowerCase()}`,
+		isVerified: true
+	};
+
+	Users.build(signupData).save()
+		.then(async (newUser) => {
+			await AuthServices.create({
+				userId: newUser.id,
+				providerName: 'google',
+				providerIdentifier: profile.id
+			});
+
+			const userObject = newUser.get({plain: true});
+			done(null, userObject.apiKey);
+		});
+
+	done(null, false);
 }
 
 module.exports = authController;
