@@ -1,15 +1,21 @@
-const bodyParser = require('body-parser');
-const cors = require('cors');
+/**
+ * Setup and middlewares application
+ * Date: 24/05/2023
+ * Author: https://github.com/omeiza
+ */
+
 const openAPIValidator = require("express-openapi-validator");
-const session = require("express-session");
-const passport = require("passport");
-const twitterStrategy = require("passport-twitter").Strategy;
-const googleStrategy = require('passport-google-oauth20').Strategy;
-const authController = require("./controllers/auth.controller");
 const express = require("express");
 const app = express();
+const passport = require("passport");
+const authController = require("./controllers/auth.controller");
+const bodyParser = require('body-parser');
+const cors = require('cors');
+const session = require("express-session");
+const twitterStrategy = require("passport-twitter").Strategy;
+const googleStrategy = require('passport-google-oauth20').Strategy;
 
-// Passport INIT
+// Session storage for passport
 app.use(session({
 	secret: 'palm-groove',
 	resave: false,
@@ -23,7 +29,7 @@ app.use(passport.session(undefined));
 // Cors
 app.use(cors());
 
-// Add OpenAPI to express app
+// OpenAPI validator
 app.use(
 	openAPIValidator.middleware({
 		apiSpec: '../spec/openapi.yaml',
@@ -33,40 +39,44 @@ app.use(
 	}),
 );
 
-// Setup body parser
+// Incoming request body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
 
-// Twitter Auth
+// Passport: Twitter Strategy
 passport.use("twitter",
 	new twitterStrategy({
-		consumerKey: process.env.TWITTER_CONSUMER_KEY,
-		consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
-		userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
-		callbackURL: process.env.TWITTER_CALLBACK_URL
-		}, authController.twitter
+			consumerKey: process.env.TWITTER_CONSUMER_KEY,
+			consumerSecret: process.env.TWITTER_CONSUMER_SECRET,
+			userProfileURL: "https://api.twitter.com/1.1/account/verify_credentials.json?include_email=true",
+			callbackURL: process.env.TWITTER_CALLBACK_URL
+		},
+		authController.twitter
 	)
 );
 
-// Google Auth
+// Passport: Google Strategy
 passport.use("google",
 	new googleStrategy({
-		clientID: process.env.GOOGLE_CLIENT_ID,
-		clientSecret: process.env.GOOGLE_CLIENT_SECRET,
-		callbackURL: process.env.GOOGLE_CALLBACK_URL,
-		}, authController.google
+			clientID: process.env.GOOGLE_CLIENT_ID,
+			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+			callbackURL: process.env.GOOGLE_CALLBACK_URL,
+		},
+		authController.google
 	)
 );
 
-// More Passport JS
+// Save user object to session
 passport.serializeUser((user, done) => {
 	done(null, user);
 });
+
+// Get user from session
 passport.deserializeUser((user, done) => {
 	done(null, user);
 });
 
-// Error handling with express app middleware
+// Reformat error in response
 app.use((err, req, res, next) => {
 	res.status(err.status || 500).json({
 		status: err.message,
