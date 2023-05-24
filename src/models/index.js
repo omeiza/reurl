@@ -1,3 +1,8 @@
+/**
+ * Consolidates all models and attach them to their associations
+ * Author: https://github.com/omeiza
+ */
+
 const fs = require('fs');
 const path = require('path');
 const {Sequelize} = require('sequelize');

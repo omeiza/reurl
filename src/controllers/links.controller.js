@@ -4,9 +4,9 @@
  */
 
 const { uniqueID } = require('../utils/helper.util');
-const Links = require('../models/links.model');
 const Sequelize = require('sequelize');
 const Op = Sequelize.Op;
+const Links = require('../models/links.model');
 const linkControllers = {};
 
 /**

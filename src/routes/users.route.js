@@ -1,5 +1,5 @@
 /**
- * User routes to their controllers
+ * User routes
  * Author: https://github.com/omeiza
  */
 

@@ -4,13 +4,13 @@
  */
 
 const express = require('express');
-const authController = require("../controllers/auth.controller");
 const router = express.Router();
+const authController = require("../controllers/auth.controller");
 
 // Add new user
 router.put('/signup', authController.signup);
 
-// Add new user
+// Log user in, and get API key
 router.post('/login', authController.login);
 
 module.exports = router;

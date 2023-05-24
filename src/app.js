@@ -1,10 +1,9 @@
 /**
  * Setup and middlewares application
- * Date: 24/05/2023
  * Author: https://github.com/omeiza
  */
 
-const openAPIValidator = require("express-openapi-validator");
+const openapiValidator = require("express-openapi-validator");
 const express = require("express");
 const app = express();
 const passport = require("passport");
@@ -31,7 +30,7 @@ app.use(cors());
 
 // OpenAPI validator
 app.use(
-	openAPIValidator.middleware({
+	openapiValidator.middleware({
 		apiSpec: '../spec/openapi.yaml',
 		validateRequests: true,
 		validateResponses: true,

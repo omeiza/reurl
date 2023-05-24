@@ -1,5 +1,5 @@
 /**
- * Helper methods
+ * Helper/Utility functions
  * Author: https://github.com/omeiza
  */
 
@@ -17,7 +17,6 @@ helpers.generateRandomString = (strLen) => {
 
 	if (strLen) {
 		const charToPickFrom = process.env.CHAR_TO_PICKFROM;
-
 		let str = '';
 		for (let i = 1; i <= strLen; i++) {
 			const randomNumber = charToPickFrom.charAt(Math.random() * charToPickFrom.length);

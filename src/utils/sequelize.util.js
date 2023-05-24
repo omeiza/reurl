@@ -1,3 +1,8 @@
+/**
+ * Get new instance Sequelize ORM object - to be used across the application
+ * Author: https://github.com/omeiza
+ */
+
 const config = require('../configs/db.config');
 const {Sequelize} = require('sequelize');
 

@@ -1,11 +1,11 @@
 /**
- * User authentication
+ * User authentication controller
  * Author: https://github.com/omeiza
  */
 
+const { hash, generateKey } = require("../utils/helper.util");
 const Users = require('../models/users.model');
 const AuthServices = require("../models/authServices.model");
-const { hash, generateKey } = require("../utils/helper.util");
 const authController = {};
 
 /**
@@ -91,6 +91,14 @@ authController.login = async (req, res) => {
 	}
 }
 
+/**
+ *
+ * @param token
+ * @param tokenSecret
+ * @param profile
+ * @param done
+ * @return {Promise<void>}
+ */
 authController.twitter = async (token, tokenSecret, profile, done) => {
 	AuthServices.getUserByProvider('twitter', profile.id)
 		.then(async (result) => {
@@ -104,7 +112,7 @@ authController.twitter = async (token, tokenSecret, profile, done) => {
 
 			const user = await Users.findByPk(authProvider.userId);
 			done(null, user.apiKey);
-		})
+		});
 
 	const apikey = generateKey();
 	const signupData = {
@@ -124,11 +132,19 @@ authController.twitter = async (token, tokenSecret, profile, done) => {
 
 			const userObject = newUser.get({plain: true});
 			done(null, userObject.apiKey);
-		})
+		});
 
 	done(null, false);
 }
 
+/**
+ *
+ * @param token
+ * @param tokenSecret
+ * @param profile
+ * @param done
+ * @return {Promise<void>}
+ */
 authController.google = async (token, tokenSecret, profile, done) => {
 	AuthServices.getUserByProvider('google', profile.id)
 		.then(async (result) => {

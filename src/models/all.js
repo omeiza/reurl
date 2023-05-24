@@ -1,3 +1,8 @@
+/**
+ * Get all model associations
+ * Author: https://github.com/omeiza
+ */
+
 const models = {
     Users: require('./users.model'),
     Links: require('./links.model'),
