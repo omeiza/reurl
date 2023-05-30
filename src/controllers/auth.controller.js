@@ -3,6 +3,7 @@
  * Author: https://github.com/omeiza
  */
 
+const cookie = require("cookie");
 const { hash, generateKey } = require("../utils/helper.util");
 const Users = require('../models/users.model');
 const AuthServices = require("../models/authServices.model");
@@ -89,6 +90,34 @@ authController.login = async (req, res) => {
 	} catch (exceptionErr) {
 		console.error('Exception error ->', exceptionErr.message);
 	}
+}
+
+/**
+ * @param req
+ * @param res
+ */
+authController.loginSuccess = (req, res) => {
+	if (req.user) {
+		res.setHeader('Set-Cookie', cookie.serialize('shortener_key', String(req.user), {
+			path: "/",
+			httpOnly: false,
+			maxAge: 60 * 60 * 24 // 1 day
+		}));
+
+		res.statusCode = 302;
+		res.setHeader('Location', process.env.CLIENT_URL);
+		res.end();
+	}
+}
+
+/**
+ * @param req
+ * @param res
+ */
+authController.loginFailed = (req, res) => {
+	res.status(401).json({
+		status: "Access Denied!",
+	});
 }
 
 /**
