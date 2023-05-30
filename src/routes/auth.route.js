@@ -24,7 +24,6 @@ router.get("/login/failed", authController.loginFailed);
  * 1. GET twitter
  * 2. GET twitter callback
  */
-
 router.get("/twitter",
 	passport.authenticate("twitter", { scope: ["profile"] }, () => { return null; })
 );
@@ -37,10 +36,9 @@ router.get("/twitter/callback",
 );
 
 /**
- * 1. GET facebook
- * 2. GET facebook callback
+ * 1. GET google
+ * 2. GET google callback
  */
-
 router.get("/google",
 	passport.authenticate("google", { scope: ["email", "profile"] }, () => { return null; })
 );

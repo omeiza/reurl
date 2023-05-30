@@ -176,6 +176,77 @@ paths:
           $ref: "#/components/responses/forbidden"
         404:
           $ref: "#/components/responses/notFound"
+  # Users
+  /users/{username}:
+    get:
+      description: Get user
+      parameters:
+        - in: header
+          name: x-api-key
+          description: API Key
+          required: true
+          schema:
+            type: string
+        - name: username
+          in: path
+          description: User username
+          required: true
+          schema:
+            type: string
+      responses:
+        200:
+          description: User details
+          content:
+            application/json:
+              schema:
+                $ref: "#/components/schemas/user"
+        401:
+          $ref: "#/components/responses/authentication"
+  # Authentication
+  /auth/login:
+    post:
+      description: Login
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/loginWithUsername"
+                - $ref: "#/components/schemas/loginWithEmail"
+      responses:
+        200:
+          description: API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiKey:
+                    type: string
+        401:
+          $ref: "#/components/responses/authentication"
+  /auth/signup:
+    put:
+      description: Signup
+      requestBody:
+        content:
+          application/json:
+            schema:
+              oneOf:
+                - $ref: "#/components/schemas/withUsername"
+                - $ref: "#/components/schemas/withEmail"
+      responses:
+        200:
+          description: API key
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  apiKey:
+                    type: string
+        400:
+          $ref: "#/components/responses/invalidRequest"
 # Components
 components:
   responses:
@@ -225,6 +296,25 @@ components:
               status:
                 type: string
   schemas:
+    user:
+      type: object
+      properties:
+        id:
+          type: string
+        email:
+          type: string
+        username:
+          type: string
+        isAdmin:
+          type: boolean
+        isActive:
+          type: boolean
+        createdAt:
+          type: string
+          format: 'date-time'
+        updatedAt:
+          type: string
+          format: 'date-time'
     links:
       type: object
       properties:
@@ -257,3 +347,26 @@ components:
         updatedAt:
           type: string
           format: 'date-time'
+    withUsername:
+      type: object
+      required:
+        - username
+        - password
+      properties:
+        username:
+          type: string
+        password:
+          type: string
+          format: password
+    withEmail:
+      type: object
+      required:
+        - email
+        - password
+      properties:
+        email:
+          type: string
+          format: email
+        password:
+          type: string
+          format: password

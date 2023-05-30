@@ -31,7 +31,7 @@ app.use(cors());
 // OpenAPI validator
 app.use(
 	openapiValidator.middleware({
-		apiSpec: '../spec/openapi.yaml',
+		apiSpec: './spec/openapi.yaml',
 		validateRequests: true,
 		validateResponses: true,
 		ignoreUndocumented: true
