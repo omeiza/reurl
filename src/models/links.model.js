@@ -3,10 +3,11 @@
  * Table: links
  * Author: https://github.com/omeiza
  */
-
+require('./../utils/env.util.js');
 const {DataTypes} = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
 const User = require('./users.model');
+
 
 const Links = sequelize.define(
 	'links',
@@ -30,6 +31,10 @@ const Links = sequelize.define(
 			validate: {
 				isUrl: true
 			}
+		},
+		shortUrl: {
+			type: DataTypes.STRING,
+			allowNull: true,
 		},
 		viewCount: {
 			type: DataTypes.INTEGER,

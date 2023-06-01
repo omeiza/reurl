@@ -108,10 +108,12 @@ linkControllers.get = (req, res) => {
  */
 linkControllers.add = (req, res) => {
 	try {
+		const id = uniqueID(6);
 		Links.build({
-			id: uniqueID(6),
+			id: id,
 			userId: req.user.id,
-			url: req.body.url
+			url: req.body.url,
+			shortUrl: `${process.env.SITE_URL}/${id}`
 		})
 			.save()
 			.then((link) => {
