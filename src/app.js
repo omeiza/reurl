@@ -29,14 +29,14 @@ app.use(passport.session(undefined));
 app.use(cors());
 
 // OpenAPI validator
-app.use(
-	openapiValidator.middleware({
-		apiSpec: './spec/openapi.yaml',
-		validateRequests: true,
-		validateResponses: true,
-		ignoreUndocumented: true
-	}),
-);
+// app.use(
+// 	openapiValidator.middleware({
+// 		apiSpec: './spec/openapi.yaml',
+// 		validateRequests: true,
+// 		validateResponses: true,
+// 		ignoreUndocumented: true
+// 	}),
+// );
 
 // Incoming request body parser
 app.use(bodyParser.json());

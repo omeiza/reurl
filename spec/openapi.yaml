@@ -42,11 +42,9 @@ paths:
           schema:
             type: string
             enum:
-              - all
               - published
-              - approved
-              - rejected
-            default: all
+              - draft
+              - trash
         - name: order
           in: query
           description: Order of memes search result
@@ -113,12 +111,6 @@ paths:
           $ref: "#/components/responses/forbidden"
   /links/{id}:
     parameters:
-      - in: header
-        name: x-api-key
-        description: API Key
-        required: true
-        schema:
-          type: string
       - name: id
         in: path
         description: Link id
@@ -142,6 +134,13 @@ paths:
           $ref: "#/components/responses/notFound"
     post:
       description: Update specific link
+      parameters:
+        - in: header
+          name: x-api-key
+          description: API Key
+          required: true
+          schema:
+            type: string
       requestBody:
         content:
           application/json:
@@ -167,6 +166,13 @@ paths:
           $ref: "#/components/responses/notFound"
     delete:
       description: Delete specific link
+      parameters:
+        - in: header
+          name: x-api-key
+          description: API Key
+          required: true
+          schema:
+            type: string
       responses:
         200:
           $ref: "#/components/responses/ok"
@@ -211,8 +217,8 @@ paths:
           application/json:
             schema:
               oneOf:
-                - $ref: "#/components/schemas/loginWithUsername"
-                - $ref: "#/components/schemas/loginWithEmail"
+                - $ref: "#/components/schemas/withUsername"
+                - $ref: "#/components/schemas/withEmail"
       responses:
         200:
           description: API key
@@ -310,11 +316,11 @@ components:
         isActive:
           type: boolean
         createdAt:
-          type: string
-          format: 'date-time'
+          type: object
+          format: date-time
         updatedAt:
-          type: string
-          format: 'date-time'
+          type: object
+          format: date-time
     links:
       type: object
       properties:
@@ -342,11 +348,11 @@ components:
         status:
           type: string
         createdAt:
-          type: string
-          format: 'date-time'
+          type: object
+          format: date-time
         updatedAt:
-          type: string
-          format: 'date-time'
+          type: object
+          format: date-time
     withUsername:
       type: object
       required:

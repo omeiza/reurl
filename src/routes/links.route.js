@@ -19,9 +19,9 @@ router.get('/:id', linkController.get);
 router.put('/', authenticate, linkController.add);
 
 // Update short link
-router.post('/:id', [authenticate, authorize.links], linkController.update);
+router.post('/:id', authenticate, authorize.links, linkController.update);
 
 // Delete short link
-router.delete('/:id', [authenticate, authorize.links], linkController.delete);
+router.delete('/:id', authenticate, authorize.links, linkController.delete);
 
 module.exports = router;
