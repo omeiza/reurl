@@ -105,7 +105,7 @@ authController.loginSuccess = (req, res) => {
 		}));
 
 		res.statusCode = 302;
-		res.setHeader('Location', process.env.CLIENT_URL);
+		res.setHeader('Location', process.env.SITE_URL);
 		res.end();
 	}
 }
