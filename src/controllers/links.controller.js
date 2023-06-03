@@ -21,7 +21,6 @@ linkControllers.getMany = (req, res) => {
 	try {
 		const perPage = req.query.count ? parseInt(req.query.count) : 8;
 		const page = req.query.page ? parseInt(req.query.page) : 1;
-
 		const where = { userId: req.user.id };
 		const args = {
 			limit: perPage,
@@ -34,8 +33,7 @@ linkControllers.getMany = (req, res) => {
 
 		if (req.query.search) {
 			const search = req.query.search.toLowerCase();
-
-			where.url = {
+			where.title = {
 				[Op.like]: `%${search}%`
 			}
 		}
@@ -112,14 +110,18 @@ linkControllers.add = (req, res) => {
 		Links.build({
 			id: id,
 			userId: req.user.id,
-			url: req.body.url,
-			shortUrl: `${process.env.SITE_URL}/${id}`
+			title: req.body.title ? req.body.title : null,
+			longUrl: req.body.url,
+			shortUrl: req.body.customUrl ? req.body.customUrl : `${process.env.SITE_URL}/${id}`,
+			customUrl: req.body.customUrl ? req.body.customUrl : null,
 		})
 			.save()
 			.then((link) => {
 				const linkObj = link.get({ plain: true });
 				return res.json({
-					id: linkObj.id
+					id: linkObj.id,
+					shortUrl: linkObj.shortUrl,
+					longUrl: linkObj.longUrl
 				})
 			})
 			.catch(error => {
@@ -143,7 +145,8 @@ linkControllers.update = (req, res) => {
 	try {
 		const args = {};
 		if (req.body.status) args.status = req.body.status;
-		if (req.body.url) args.url = req.body.url;
+		if (req.body.title) args.title = req.body.title;
+		if (req.body.longUrl) args.longUrl = req.body.longUrl;
 
 		Links.update(args, {
 			where: {

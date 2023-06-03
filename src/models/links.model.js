@@ -25,7 +25,11 @@ const Links = sequelize.define(
 				model: User
 			}
 		},
-		url: {
+		title: {
+			type: DataTypes.STRING,
+			allowNull: true,
+		},
+		longUrl: {
 			type: DataTypes.STRING,
 			allowNull: false,
 			validate: {
@@ -34,7 +38,17 @@ const Links = sequelize.define(
 		},
 		shortUrl: {
 			type: DataTypes.STRING,
+			allowNull: false,
+			validate: {
+				isUrl: true
+			}
+		},
+		customUrl: {
+			type: DataTypes.STRING,
 			allowNull: true,
+			validate: {
+				isUrl: true
+			}
 		},
 		viewCount: {
 			type: DataTypes.INTEGER,
