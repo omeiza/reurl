@@ -14,7 +14,7 @@ fs
     .filter(file => {
         return (file.indexOf('.') !== 0)
             && (file !== path.basename(module.filename))
-            && (file.slice(-3) === 'js')
+            && (file.slice(-2) === 'js')
             && file !== 'all.js'
     })
     .forEach(file => {
