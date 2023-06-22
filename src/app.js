@@ -3,7 +3,7 @@
  * Author: https://github.com/omeiza
  */
 
-const openapiValidator = require("express-openapi-validator");
+const openapi = require("express-openapi-validator");
 const express = require("express");
 const app = express();
 const passport = require("passport");
@@ -29,14 +29,14 @@ app.use(passport.session(undefined));
 app.use(cors());
 
 // OpenAPI validator
-// app.use(
-// 	openapiValidator.middleware({
-// 		apiSpec: './spec/openapi.yaml',
-// 		validateRequests: true,
-// 		validateResponses: true,
-// 		ignoreUndocumented: true
-// 	}),
-// );
+app.use(
+	openapi.middleware({
+		apiSpec: './spec/openapi.yaml',
+		validateRequests: true,
+		validateResponses: true,
+		ignoreUndocumented: true
+	}),
+);
 
 // Incoming request body parser
 app.use(bodyParser.json());

@@ -1,35 +1,24 @@
 # URL Shortener
-Node.js backend web services for a URL shortener. It allows user authentication and allow authenticated user to create a URL, edit a URL, and delete a URL.
+Node.js backend web services for a URL shortener. This was created for learning purpose and can be used as such by anyone 😊.
 
-This was created for learning purpose and can be used as such by anyone.
-
-## Tools
+## 🧰 Tools
 -   Node.js (v18.2)
--   [Sequelize ORM (v6)](https://sequelize.org/)
+-   Sequelize ORM (v6)
 -   MySQL (v8)
+-   Passport JS
 
-## Installation
+## ⚒️ Setup
 If you want to run this site locally:
 
 -   Make sure you have [Node](https://nodejs.org/en/download) and [MySQL](https://formulae.brew.sh/formula/mysql) installed
 -   `git clone https://github.com/omeiza/shortner-backend-node.git`
--   Run `npm install` to install dependencies
+-   Run `npm install` to install dependencies from package.json
 -   Set up your MySQL database
 
-## Configuration
-In the project root folder, create a `.env.development` file and add your database/project configuration like below.
-```markdown
-DB_HOST=127.0.0.1
-DB_USER=root
-DB_PASSWORD=
-DB_NAME=shortener
-DB_PORT=3306
-HASH_ALGO=MD5
-HASHING_SECRET=flyingmonkey
-CHAR_TO_PICKFROM=abcdefghijklmnopqrstuvwxyz0123456789
-```
+## ⚙️ Configuration
+In the project root folder, create a `.env.development` file and add the following and their values `DB_HOST`, `DB_USER`, `DB_PASSWORD`, `DB_NAME`, `DB_PORT`, `HASHING_SECRET`, `HASH_ALGO` (`md5`, `sha256`, or `sha3-256`), and `CHAR_TO_PICKFROM`, which could be `abcdefghijklmnopqrstuvwxyz0123456789`.
 
-## Run application
+## 🏃 Run application
 -   Run `npm run sync` to create the required database tables 
 -   Run `npm run dev`
 -   Let's go!
