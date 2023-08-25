@@ -24,3 +24,7 @@ To get the social login (Twitter & Google) to work, the following keys need to b
 -   Run `npm run sync` to create the required database tables 
 -   Run `npm run dev`
 -   Let's go!
+
+## Info
+This project has been moved and continued using python at [reurl.app](https://github.com/omeiza/reurl.app)
+
