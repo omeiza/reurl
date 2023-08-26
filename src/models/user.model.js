@@ -8,7 +8,7 @@ const {DataTypes} = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
 const { hash, generateKey } = require('../utils/helper.util');
 
-const Users = sequelize.define(
+const User = sequelize.define(
     'users',
     {
         id: {
@@ -52,19 +52,19 @@ const Users = sequelize.define(
     }
 );
 
-Users.addScope('public', {
+User.addScope('public', {
     attributes: [ 'id', 'email', 'username', 'isAdmin', 'isActive']
 });
 
-Users.addScope('protected', {
+User.addScope('protected', {
     attributes: {
         exclude: [ 'passwordHash', 'apiKey' ]
     }
 });
 
-Users.associate = (models) => {
-    Users.hasMany(models.links, {foreignKey: 'userId'});
-    models.links.belongsTo(Users, {foreignKey: 'userId', as: 'owner'})
+User.associate = (models) => {
+    User.hasMany(models.links, {foreignKey: 'userId'});
+    models.links.belongsTo(User, {foreignKey: 'userId', as: 'owner'})
 }
 
-module.exports = Users;
+export default User;

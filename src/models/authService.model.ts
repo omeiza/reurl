@@ -4,11 +4,11 @@
  * Author: https://github.com/omeiza
  */
 
-const {DataTypes} = require('sequelize');
-const sequelize = require('../utils/sequelize.util');
-const User = require('./users.model');
+import sequelize from "../utils/sequelize.util";
+import { DataTypes } from "sequelize";
+import User from "./user.model";
 
-const AuthServices = sequelize.define(
+const AuthService = sequelize.define(
 	'authServices',
 	{
 		id: {
@@ -26,7 +26,7 @@ const AuthServices = sequelize.define(
 			}
 		},
 		providerName: {
-			type: DataTypes.ENUM('onsite', 'twitter', 'google'),
+			type: DataTypes.ENUM('onsite', 'google'),
 			defaultValue: 'onsite',
 			allowNull: false
 		},
@@ -37,13 +37,13 @@ const AuthServices = sequelize.define(
 	}
 );
 
-AuthServices.associate = (models) => {
-	models.users.hasOne(AuthServices, {foreignKey: 'userId'});
-	AuthServices.belongsTo(models.users);
+AuthService.associate = (models) => {
+	models.users.hasOne(AuthService, {foreignKey: 'userId'});
+	AuthService.belongsTo(models.users);
 }
 
-AuthServices.getUserByProvider = function(providerType, id) {
-	return AuthServices.findOne({
+AuthService.getUserByProvider = function(providerType, id: number) {
+	return AuthService.findOne({
 		where: {
 			providerName: providerType,
 			providerIdentifier: id
@@ -51,4 +51,4 @@ AuthServices.getUserByProvider = function(providerType, id) {
 	})
 }
 
-module.exports = AuthServices;
+export default AuthService;

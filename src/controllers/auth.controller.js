@@ -128,52 +128,6 @@ authController.loginFailed = (req, res) => {
  * @param done
  * @return {Promise<void>}
  */
-authController.twitter = async (token, tokenSecret, profile, done) => {
-	AuthServices.getUserByProvider('twitter', profile.id)
-		.then(async (result) => {
-			const authProvider = result.get({ plain: true });
-			const newAPIKey = generateKey();
-			await Users.update({apiKey: newAPIKey}, {
-				where: {
-					id: authProvider.userId
-				},
-			});
-
-			const user = await Users.findByPk(authProvider.userId);
-			done(null, user.apiKey);
-		});
-
-	const apikey = generateKey();
-	const signupData = {
-		email: profile._json.email,
-		apiKey: apikey,
-		username: `${profile._json.screen_name.toLowerCase()}`,
-		isVerified: true
-	};
-
-	await Users.build(signupData).save()
-		.then(async (newUser) => {
-			await AuthServices.create({
-				userId: newUser.id,
-				providerName: 'twitter',
-				providerIdentifier: profile.id
-			});
-
-			const userObject = newUser.get({plain: true});
-			done(null, userObject.apiKey);
-		});
-
-	done(null, false);
-}
-
-/**
- *
- * @param token
- * @param tokenSecret
- * @param profile
- * @param done
- * @return {Promise<void>}
- */
 authController.google = async (token, tokenSecret, profile, done) => {
 	AuthServices.getUserByProvider('google', profile.id)
 		.then(async (result) => {
