@@ -5,7 +5,7 @@
  */
 
 import sequelize from "../utils/sequelize.util";
-import { Model, DataTypes, Optional } from "sequelize";
+import { Model, Optional, DataTypes } from "sequelize";
 import { hash, generateKey } from "../utils/helper.util";
 
 interface UserAttributes {
@@ -79,9 +79,9 @@ User.addScope('protected', {
     }
 });
 
-User.associate = (models) => {
-    User.hasMany(models.link, {foreignKey: 'userId'});
-    models.link.belongsTo(User, {foreignKey: 'userId', as: 'owner'})
+User.associate = (models: any): void => {
+    User.hasMany(models.link, { foreignKey: 'userId' });
+    models.link.belongsTo(User, { foreignKey: 'userId', as: 'owner' })
 }
 
 export default User;

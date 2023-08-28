@@ -1,15 +1,34 @@
 /**
- * Model: Links
- * Table: links
+ * Model: Link
+ * Table: link
  * Author: https://github.com/omeiza
  */
+
 require('./../utils/env.util.js');
 import User from "./user.model"
 import sequelize from "../utils/sequelize.util";
-import { DataTypes } from "sequelize";
+import { Model, Optional, DataTypes } from "sequelize";
 
-const Link = sequelize.define(
-	'links',
+interface LinkAttributes {
+	id: string,
+	userId: number,
+	title: string,
+	longUrl: string,
+	shortUrl: string,
+	customUrl: string,
+	viewCount: number,
+	status: string
+}
+
+interface LinkCreationAttributes extends Optional<LinkAttributes, 'id' | 'title' | 'longUrl' | 'shortUrl' | 'status'> {}
+interface LinkInstance extends Model<LinkAttributes, LinkCreationAttributes>, LinkAttributes {
+	createdAt?: Date,
+	updatedAt?: Date,
+	deletedAt?: Date
+}
+
+const Link = sequelize.define<LinkInstance>(
+	'link',
 	{
 		id: {
 			type: DataTypes.STRING,
