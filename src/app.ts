@@ -56,4 +56,4 @@ app.use((err: ResponseError, req: Request, res: Response) => {
 	});
 });
 
-module.exports = app;
+export default app;

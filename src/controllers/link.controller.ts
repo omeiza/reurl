@@ -3,11 +3,20 @@
  * Author: https://github.com/omeiza
  */
 
-const { uniqueID } = require('../utils/helper.util');
-const Sequelize = require('sequelize');
+import { uniqueID } from "../utils/helper.util";
+import Sequelize from "sequelize";
+import { Request, Response, RequestHandler } from "express";
+import Link from "../models/link.model";
+import {UserTypes} from "../types/user";
+
 const Op = Sequelize.Op;
-const Links = require('../models/links.model');
-const linkControllers = {};
+
+type Params = {};
+type ResBody = {};
+type ReqBody = {};
+type ReqQuery = {
+	query: string;
+}
 
 /**
  * getMany lists out links that matches a particular search criteria
@@ -17,14 +26,24 @@ const linkControllers = {};
  * @param res
  * @return {JSON}
  */
-linkControllers.getMany = (req, res) => {
+export const getMany: RequestHandler<Params, ResBody, ReqBody, ReqQuery> = (req: Request, res: Response) => {
+	type whereT = {
+		userId: number,
+		status: string | ParsedQs | string[] | ParsedQs[],
+	}
+
 	try {
-		const perPage = req.query.count ? parseInt(req.query.count) : 8;
-		const page = req.query.page ? parseInt(req.query.page) : 1;
-		const where = { userId: req.user.id };
-		const args = {
-			limit: perPage,
-			offset: perPage * (page - 1)
+		const perPage = req.query.count ? parseInt(<string>req.query.count) : 8;
+		const page = req.query.page ? parseInt(<string>req.query.page) : 1;
+		const where = <whereT>{};
+		const args: { limit: number, offset: number} = { limit: perPage, offset: perPage * (page - 1) }
+
+
+		// { userId: req.user?.id };
+
+		if (req && req.user) {
+			const user: UserTypes = req.user;
+			where.userId = req.user.id;
 		}
 
 		if (req.query.status) {
@@ -39,7 +58,7 @@ linkControllers.getMany = (req, res) => {
 		}
 
 		args.where = where;
-		Links.findAndCountAll(args)
+		Link.findAndCountAll(args)
 			.then(async linksCountAndRows => {
 				const {count, rows} = linksCountAndRows;
 
@@ -62,8 +81,8 @@ linkControllers.getMany = (req, res) => {
 					error: error.message
 				});
 			});
-	} catch (exceptionErr) {
-		console.error('Exception error -> ', exceptionErr.message);
+	} catch (error) {
+		console.error('Exception error -> ', error);
 	}
 }
 
@@ -74,10 +93,10 @@ linkControllers.getMany = (req, res) => {
  * @param res
  * @return {JSON}
  */
-linkControllers.get = (req, res) => {
+export const get = (req: Request, res: Response) => {
 	try {
-		Links.findByPk(req.params.id)
-			.then(link => {
+		Link.findByPk(req.params.id)
+			.then((link) => {
 				if (!link || link.length === 0) {
 					return res.status(404).json({
 						status: 'No record found'
@@ -92,8 +111,8 @@ linkControllers.get = (req, res) => {
 					error: error.message
 				});
 			})
-	} catch (exceptionErr) {
-		console.error('Exception error -> ', exceptionErr.message);
+	} catch (error) {
+		console.error('Exception error -> ', error);
 	}
 }
 
@@ -104,10 +123,10 @@ linkControllers.get = (req, res) => {
  * @param res
  * @return {JSON}
  */
-linkControllers.add = (req, res) => {
+export const add = (req: Request, res: Response) => {
 	try {
 		const id = uniqueID(6);
-		Links.build({
+		Link.build({
 			id: id,
 			userId: req.user.id,
 			title: req.body.title ? req.body.title : null,
@@ -130,8 +149,8 @@ linkControllers.add = (req, res) => {
 					error: error.message
 				})
 			})
-	} catch (exceptionErr) {
-		console.error('Exception error -> ', exceptionErr.message);
+	} catch (error) {
+		console.error('Exception error -> ', error);
 	}
 }
 
@@ -141,14 +160,14 @@ linkControllers.add = (req, res) => {
  * @param res
  * @return {void}
  */
-linkControllers.update = (req, res) => {
+export const update = (req: Request, res:Response) => {
 	try {
-		const args = {};
+		const args = {} as { status: string, title: string, longUrl: string };
 		if (req.body.status) args.status = req.body.status;
 		if (req.body.title) args.title = req.body.title;
 		if (req.body.longUrl) args.longUrl = req.body.longUrl;
 
-		Links.update(args, {
+		Link.update(args, {
 			where: {
 				id: req.params.id
 			}
@@ -164,8 +183,8 @@ linkControllers.update = (req, res) => {
 					error: error.message
 				})
 			});
-	} catch (exceptionErr) {
-		console.error('Exception error -> ', exceptionErr.message);
+	} catch (error) {
+		console.error('Exception error -> ', error);
 	}
 }
 
@@ -175,9 +194,9 @@ linkControllers.update = (req, res) => {
  * @param res
  * @return {void}
  */
-linkControllers.delete = (req, res) => {
+export const deleteLink = (req: Request, res: Response) => {
 	try {
-		Links.destroy({
+		Link.destroy({
 			where: {
 				id: req.params.id
 			}
@@ -193,9 +212,7 @@ linkControllers.delete = (req, res) => {
 					error: error.message
 				})
 			});
-	} catch (exceptionErr) {
-		console.error('Exception error -> ', exceptionErr.message);
+	} catch (error) {
+		console.error('Exception error -> ', error);
 	}
 }
-
-module.exports = linkControllers;

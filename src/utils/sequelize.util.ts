@@ -3,8 +3,8 @@
  * Author: https://github.com/omeiza
  */
 
-const config = require('../configs/db.config');
-const {Sequelize} = require('sequelize');
+import config from "../configs/db.config";
+import { Sequelize } from "sequelize";
 
 const sequelize = new Sequelize(config.database, config.user, config.password, {
     host: config.host,
@@ -12,4 +12,4 @@ const sequelize = new Sequelize(config.database, config.user, config.password, {
     logging: !!process.env.DEBUG
 });
 
-module.exports = sequelize;
+export default sequelize;

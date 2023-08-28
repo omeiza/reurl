@@ -4,12 +4,11 @@
  * Author: https://github.com/omeiza
  */
 require('./../utils/env.util.js');
-const {DataTypes} = require('sequelize');
-const sequelize = require('../utils/sequelize.util');
-const User = require('./users.model');
+import User from "./user.model"
+import sequelize from "../utils/sequelize.util";
+import { DataTypes } from "sequelize";
 
-
-const Links = sequelize.define(
+const Link = sequelize.define(
 	'links',
 	{
 		id: {
@@ -63,4 +62,4 @@ const Links = sequelize.define(
 	}
 );
 
-module.exports = Links;
+export default Link;

@@ -3,13 +3,13 @@
  * Author: https://github.com/omeiza
  */
 
+require("./routes/index");
+require('./utils/env.util.js');
+import app from "./app";
+import models from "./models";
 import passport from "passport";
 import User from "./models/user.model";
 
-require('./utils/env.util.js');
-require("./routes/index");
-const app = require("./app");
-const models = require('./models');
 const port = process.env.PORT ?? '4001';
 
 (() => {
@@ -23,7 +23,7 @@ const port = process.env.PORT ?? '4001';
 				});
 			});
 	} catch (error) {
-		console.error('Unable to connect to database -> ', error.original);
+		console.error('Unable to connect to database -> ', error);
 	}
 })();
 

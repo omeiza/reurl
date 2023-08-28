@@ -3,22 +3,22 @@
  * Author: https://github.com/omeiza
  */
 
-const express = require("express");
-const passport = require("passport");
+import passport from "passport";
+import { signup, login, loginSuccess, loginFailure } from "../controllers/auth.controller";
+import express from "express";
 const router = express.Router();
-const authController = require("../controllers/auth.controller");
 
 // Add new user
-router.put("/signup", authController.signup);
+router.put("/signup", signup);
 
 // Log user in, and get API key
-router.post("/login", authController.login);
+router.post("/login", login);
 
 // For social: login success
-router.get("/login/success", authController.loginSuccess);
+router.get("/login/success", loginSuccess);
 
 // For social: login failed
-router.get("/login/failed", authController.loginFailed);
+router.get("/login/failed", loginFailure);
 
 /**
  * 1. GET twitter
@@ -50,4 +50,4 @@ router.get("/google/callback",
 	}, () => { return null; })
 );
 
-module.exports = router;
+export default router;

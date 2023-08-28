@@ -3,8 +3,7 @@
  * Author: https://github.com/omeiza
  */
 
-const Links = require('../models/links.model');
-const authorize = {};
+import Link from "../models/link.model";
 
 /**
  * @param req
@@ -12,9 +11,9 @@ const authorize = {};
  * @param next
  * @return {Promise<void>}
  */
-authorize.links = async (req, res, next) => {
+export const links = async (req, res, next) => {
 	try {
-		const link = await Links.findOne({
+		const link = await Link.findOne({
 			where: {
 				id: req.params.id,
 				userId: req.user.id
@@ -28,9 +27,7 @@ authorize.links = async (req, res, next) => {
 		}
 
 		next();
-	} catch (exceptionErr) {
-		console.error('Exception error ->', exceptionErr.message);
+	} catch (error) {
+		console.error('Exception error: ', error);
 	}
 }
-
-module.exports = authorize;

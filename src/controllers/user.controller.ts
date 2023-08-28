@@ -3,9 +3,9 @@
  * Author: https://github.com/omeiza
  */
 
-const Users = require('../models/users.model');
-const Links = require('../models/links.model');
-const userController = {};
+import User from "../models/user.model";
+import Link from "../models/link.model";
+import { Request, Response } from "express";
 
 /**
  * Get existing user
@@ -13,7 +13,7 @@ const userController = {};
  * @param res
  * @return {Promise<*>}
  */
-userController.get = async (req, res) => {
+export const get = async (req: Request, res: Response) => {
 	try {
 		const username = (req.params.username).toLowerCase();
 		if (username !== req.user.username) {
@@ -22,8 +22,8 @@ userController.get = async (req, res) => {
 			});
 		}
 
-		const user = await Users.scope('public').findByPk(req.user.id);
-		const {count, rows} = await Links.findAndCountAll({
+		const user = await User.scope('public').findByPk(req.user.id);
+		const {count, rows} = await Link.findAndCountAll({
 			where: {
 				userId: req.user.id
 			}
@@ -36,9 +36,7 @@ userController.get = async (req, res) => {
 		}
 
 		return res.json({ ...user.toJSON(), links: userLinks});
-	} catch (exceptionErr) {
-		console.error('Exception error ->', exceptionErr.message);
+	} catch (error) {
+		console.error('Exception error ->', error);
 	}
 }
-
-module.exports = userController;

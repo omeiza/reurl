@@ -7,9 +7,9 @@
  */
 
 require('../src/utils/env.util');
-const Users = require('../src/models/users.model');
-const Links = require('../src/models/links.model');
-const AuthServices = require('../src/models/authServices.model');
+import User from "../src/models/user.model";
+import Link from "../src/models/link.model";
+import AuthService from "../src/models/authService.model";
 
 (async () => {
 	try {
@@ -18,21 +18,21 @@ const AuthServices = require('../src/models/authServices.model');
 		 * 2. Sync (Create or Update) in AuthService model
 		 * 3. Setup model associations between User & AuthService
 		 */
-		await Users.sync({ alter: true });
-		await AuthServices.sync({ alter: true })
+		await User.sync({ alter: true });
+		await AuthService.sync({ alter: true })
 			.then(() => {
-				Users.hasOne(AuthServices);
-				AuthServices.belongsTo(Users);
+				User.hasOne(AuthService);
+				AuthService.belongsTo(User);
 			});
 
 		/**
 		 * 1. Sync (Create or Update) in Link model
 		 * 2. Setup model association between Link & User
 		 */
-		await Links.sync({ alter: true })
+		await Link.sync({ alter: true })
 			.then(async() => {
-				Users.hasMany(Links);
-				Links.belongsTo(Users);
+				User.hasMany(Link);
+				Link.belongsTo(User);
 			});
 
 		console.log("Database tables successfully synced in!");

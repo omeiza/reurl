@@ -4,12 +4,29 @@
  * Author: https://github.com/omeiza
  */
 
-const {DataTypes} = require('sequelize');
-const sequelize = require('../utils/sequelize.util');
-const { hash, generateKey } = require('../utils/helper.util');
+import sequelize from "../utils/sequelize.util";
+import { Model, DataTypes, Optional } from "sequelize";
+import { hash, generateKey } from "../utils/helper.util";
 
-const User = sequelize.define(
-    'users',
+interface UserAttributes {
+    id: number,
+    email: string,
+    passwordHash?: string,
+    username: string,
+    apiKey: string,
+    isAdmin: boolean,
+    isActive: boolean
+}
+
+interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'email' | 'username' | 'apiKey'> {}
+interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {
+    createdAt?: Date,
+    updatedAt?: Date,
+    deletedAt?: Date
+}
+
+const User = sequelize.define<UserInstance>(
+    'user',
     {
         id: {
             type: DataTypes.INTEGER,
@@ -63,8 +80,8 @@ User.addScope('protected', {
 });
 
 User.associate = (models) => {
-    User.hasMany(models.links, {foreignKey: 'userId'});
-    models.links.belongsTo(User, {foreignKey: 'userId', as: 'owner'})
+    User.hasMany(models.link, {foreignKey: 'userId'});
+    models.link.belongsTo(User, {foreignKey: 'userId', as: 'owner'})
 }
 
 export default User;

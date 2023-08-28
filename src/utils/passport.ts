@@ -1,8 +1,13 @@
 // Passport: Google Strategy
+/**
+ * Passport: Google Strategy
+ * Author: https://github.com/omeiza
+ */
+
 import googlePassport from "passport-google-oauth20";
 import passport from "passport";
-import AuthServices from "../models/authService.model";
 import User from "../models/user.model";
+import AuthServices from "../models/authService.model";
 import { generateKey } from "./helper.util";
 
 const GoogleStrategy = googlePassport.Strategy;
