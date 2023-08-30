@@ -18,7 +18,7 @@ interface UserAttributes {
     isVerified: boolean
 }
 
-export interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'email' | 'username' | 'apiKey'> {}
+export interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'email' | 'username' | 'apiKey' | 'isAdmin'> {}
 export interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {
     createdAt?: Date,
     updatedAt?: Date,

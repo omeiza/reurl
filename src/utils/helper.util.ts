@@ -11,7 +11,7 @@ import * as crypto from "crypto";
  * @param strLen
  * @return {boolean|string}
  */
-export const generateRandomString = (strLen: number): string | boolean => {
+export const generateRandomString = (strLen: number): string => {
 	let isStrLen = strLen > 0 ? strLen : false;
 
 	if (isStrLen) {
@@ -27,7 +27,7 @@ export const generateRandomString = (strLen: number): string | boolean => {
 		}
 	}
 
-	return false;
+	return '';
 }
 
 /**
@@ -57,6 +57,6 @@ export const generateKey = (count: number = 32): string => {
  * @param count
  * @return { boolean|string }
  */
-export const uniqueID = (count: number): string | boolean => {
+export const uniqueID = (count: number): string => {
 	return generateRandomString(count);
 }

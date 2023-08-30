@@ -20,8 +20,8 @@ interface LinkAttributes {
 	status: string
 }
 
-interface LinkCreationAttributes extends Optional<LinkAttributes, 'id' | 'title' | 'longUrl' | 'shortUrl' | 'status'> {}
-interface LinkInstance extends Model<LinkAttributes, LinkCreationAttributes>, LinkAttributes {
+export interface LinkCreationAttributes extends Optional<LinkAttributes, 'id' | 'title' | 'longUrl' | 'shortUrl' | 'viewCount' | 'status'> {}
+export interface LinkInstance extends Model<LinkAttributes, LinkCreationAttributes>, LinkAttributes {
 	createdAt?: Date,
 	updatedAt?: Date,
 	deletedAt?: Date

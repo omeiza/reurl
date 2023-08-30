@@ -3,10 +3,10 @@
  * Author: https://github.com/omeiza
  */
 
-import cookie from "cookie";
+const cookie = require("cookie");
 import { Request, Response } from "express";
 import { hash, generateKey } from "../utils/helper.util";
-import User from "../models/user.model";
+import User, {UserCreationAttributes, UserInstance} from "../models/user.model";
 import AuthService from "../models/authService.model";
 
 /**
@@ -53,12 +53,12 @@ export const signup = async (req: Request, res: Response) => {
  */
 export const login = async (req: Request, res: Response) => {
 	try {
-		const args = {};
+		const args = <UserCreationAttributes>{};
 		if (req.body.username) args.username = req.body.username;
 		if (req.body.email) args.email = req.body.email;
 
 		User.findOne({ where: args })
-			.then(async user => {
+			.then(async (user: UserInstance) => {
 				if (!user) {
 					return res.status(401).send({
 						status: 'Access denied'

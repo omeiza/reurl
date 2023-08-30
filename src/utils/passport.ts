@@ -1,21 +1,19 @@
-// Passport: Google Strategy
 /**
  * Passport: Google Strategy
  * Author: https://github.com/omeiza
  */
 
-import { Model, Optional, DataTypes } from "sequelize";
 import googlePassport from "passport-google-oauth20";
 import passport from "passport";
 import User, {UserCreationAttributes, UserInstance} from "../models/user.model";
 import AuthServices, {AuthServiceInstance} from "../models/authService.model";
+import {GOOGLE_CLIENT_ID, GOOGLE_CLIENT_SECRET} from "./secrets.util";
 import { generateKey } from "./helper.util";
 
 const GoogleStrategy = googlePassport.Strategy;
-passport.use("google",
-	new GoogleStrategy({
-			clientID: process.env.GOOGLE_CLIENT_ID,
-			clientSecret: process.env.GOOGLE_CLIENT_SECRET,
+passport.use(new GoogleStrategy({
+			clientID: GOOGLE_CLIENT_ID,
+			clientSecret: GOOGLE_CLIENT_SECRET,
 			callbackURL: process.env.GOOGLE_CALLBACK_URL,
 		},
 		async (token: string, tokenSecret: string, profile: any, done: any) => {

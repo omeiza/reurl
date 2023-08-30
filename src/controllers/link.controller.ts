@@ -5,17 +5,15 @@
 
 import { uniqueID } from "../utils/helper.util";
 import Sequelize from "sequelize";
-import { Request, Response, RequestHandler } from "express";
-import Link from "../models/link.model";
-import {UserTypes} from "../types/user";
+import { Request, Response } from "express";
+import { UserInstance } from "../models/user.model";
+import Link, {LinkInstance} from "../models/link.model";
 
 const Op = Sequelize.Op;
 
-type Params = {};
-type ResBody = {};
-type ReqBody = {};
-type ReqQuery = {
-	query: string;
+// Request error definition
+interface UserRequest extends Request {
+	user?: UserInstance
 }
 
 /**
@@ -26,23 +24,14 @@ type ReqQuery = {
  * @param res
  * @return {JSON}
  */
-export const getMany: RequestHandler<Params, ResBody, ReqBody, ReqQuery> = (req: Request, res: Response) => {
-	type whereT = {
-		userId: number,
-		status: string | ParsedQs | string[] | ParsedQs[],
-	}
-
+export const getMany = (req: UserRequest, res: Response) => {
 	try {
 		const perPage = req.query.count ? parseInt(<string>req.query.count) : 8;
 		const page = req.query.page ? parseInt(<string>req.query.page) : 1;
-		const where = <whereT>{};
-		const args: { limit: number, offset: number} = { limit: perPage, offset: perPage * (page - 1) }
-
-
-		// { userId: req.user?.id };
+		const args: any = { limit: perPage, offset: perPage * (page - 1) }
+		const where: any = {};
 
 		if (req && req.user) {
-			const user: UserTypes = req.user;
 			where.userId = req.user.id;
 		}
 
@@ -51,9 +40,11 @@ export const getMany: RequestHandler<Params, ResBody, ReqBody, ReqQuery> = (req:
 		}
 
 		if (req.query.search) {
-			const search = req.query.search.toLowerCase();
-			where.title = {
-				[Op.like]: `%${search}%`
+			const search = req.query.search;
+			if (typeof search === "string") {
+				where.title = {
+					[Op.like]: `%${search.toLowerCase()}%`
+				}
 			}
 		}
 
@@ -97,13 +88,10 @@ export const get = (req: Request, res: Response) => {
 	try {
 		Link.findByPk(req.params.id)
 			.then((link) => {
-				if (!link || link.length === 0) {
-					return res.status(404).json({
-						status: 'No record found'
-					});
-				}
-
-				return res.json(link);
+				if (link) return res.json(link);
+				return res.status(404).json({
+					status: 'No record found'
+				});
 			})
 			.catch(error => {
 				res.status(500).json({
@@ -123,32 +111,34 @@ export const get = (req: Request, res: Response) => {
  * @param res
  * @return {JSON}
  */
-export const add = (req: Request, res: Response) => {
+export const add = (req: UserRequest, res: Response) => {
 	try {
 		const id = uniqueID(6);
-		Link.build({
-			id: id,
-			userId: req.user.id,
-			title: req.body.title ? req.body.title : null,
-			longUrl: req.body.url,
-			shortUrl: req.body.customUrl ? req.body.customUrl : `${process.env.SITE_URL}/${id}`,
-			customUrl: req.body.customUrl ? req.body.customUrl : null,
-		})
-			.save()
-			.then((link) => {
-				const linkObj = link.get({ plain: true });
-				return res.json({
-					id: linkObj.id,
-					shortUrl: linkObj.shortUrl,
-					longUrl: linkObj.longUrl
-				})
+		if (req.user && id.length > 0) {
+			Link.build({
+				id: id,
+				userId: req.user.id,
+				title: req.body.title ? req.body.title : null,
+				longUrl: req.body.url,
+				shortUrl: req.body.customUrl ? req.body.customUrl : `${process.env.SITE_URL}/${id}`,
+				customUrl: req.body.customUrl ? req.body.customUrl : null,
 			})
-			.catch(error => {
-				return res.status(500).json({
-					status: 'Error adding link',
-					error: error.message
+				.save()
+				.then((link: LinkInstance) => {
+					const linkObj = link.get({ plain: true });
+					return res.json({
+						id: linkObj.id,
+						shortUrl: linkObj.shortUrl,
+						longUrl: linkObj.longUrl
+					})
 				})
-			})
+				.catch(error => {
+					return res.status(500).json({
+						status: 'Error adding link',
+						error: error.message
+					})
+				})
+		}
 	} catch (error) {
 		console.error('Exception error -> ', error);
 	}
