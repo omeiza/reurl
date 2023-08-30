@@ -3,9 +3,10 @@
  * Author: https://github.com/omeiza
  */
 
-import { signup, login, loginSuccess, loginFailure } from "../controllers/auth.controller";
 import express from "express";
 import passport from "passport";
+import { signup, login, loginSuccess, loginFailure } from "../controllers/auth.controller";
+
 const router = express.Router();
 
 // Add new user

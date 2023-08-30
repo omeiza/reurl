@@ -15,8 +15,8 @@ interface AuthServiceAttributes {
 	providerIdentifier: string
 }
 
-interface AuthServiceCreationAttributes extends Optional<AuthServiceAttributes, 'id' | 'userId' | 'providerName' | 'providerIdentifier'> {}
-interface AuthServiceInstance extends Model<AuthServiceAttributes, AuthServiceCreationAttributes>, AuthServiceAttributes {
+export interface AuthServiceCreationAttributes extends Optional<AuthServiceAttributes, 'id' | 'userId' | 'providerName' | 'providerIdentifier'> {}
+export interface AuthServiceInstance extends Model<AuthServiceAttributes, AuthServiceCreationAttributes>, AuthServiceAttributes {
 	createdAt?: Date,
 	updatedAt?: Date,
 	deletedAt?: Date

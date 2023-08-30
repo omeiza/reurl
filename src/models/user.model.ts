@@ -15,11 +15,11 @@ interface UserAttributes {
     username: string,
     apiKey: string,
     isAdmin: boolean,
-    isActive: boolean
+    isVerified: boolean
 }
 
-interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'email' | 'username' | 'apiKey'> {}
-interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {
+export interface UserCreationAttributes extends Optional<UserAttributes, 'id' | 'email' | 'username' | 'apiKey'> {}
+export interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, UserAttributes {
     createdAt?: Date,
     updatedAt?: Date,
     deletedAt?: Date
@@ -62,7 +62,7 @@ const User: any = sequelize.define<UserInstance>(
             type: DataTypes.BOOLEAN,
             defaultValue: false
         },
-        isActive: {
+        isVerified: {
             type: DataTypes.BOOLEAN,
             defaultValue: false
         }
