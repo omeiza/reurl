@@ -3,9 +3,9 @@
  * Author: https://github.com/omeiza
  */
 
-import passport from "passport";
 import { signup, login, loginSuccess, loginFailure } from "../controllers/auth.controller";
 import express from "express";
+import passport from "passport";
 const router = express.Router();
 
 // Add new user
@@ -19,21 +19,6 @@ router.get("/login/success", loginSuccess);
 
 // For social: login failed
 router.get("/login/failed", loginFailure);
-
-/**
- * 1. GET twitter
- * 2. GET twitter callback
- */
-router.get("/twitter",
-	passport.authenticate("twitter", { scope: ["profile"] }, () => { return null; })
-);
-
-router.get("/twitter/callback",
-	passport.authenticate("twitter", {
-		successRedirect: "/api/auth/login/success",
-		failureRedirect: "/api/auth/login/failed"
-	}, () => { return null; })
-);
 
 /**
  * 1. GET google

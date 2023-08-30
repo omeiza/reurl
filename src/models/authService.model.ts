@@ -1,15 +1,29 @@
 /**
- * Model: AuthServices
- * Table: authServices
+ * Model: AuthService
+ * Table: authService
  * Author: https://github.com/omeiza
  */
 
+import { Model, Optional, DataTypes } from "sequelize";
 import sequelize from "../utils/sequelize.util";
-import { DataTypes } from "sequelize";
 import User from "./user.model";
 
-const AuthService = sequelize.define(
-	'authServices',
+interface AuthServiceAttributes {
+	id: number,
+	userId: number,
+	providerName: string,
+	providerIdentifier: string
+}
+
+interface AuthServiceCreationAttributes extends Optional<AuthServiceAttributes, 'id' | 'userId' | 'providerName' | 'providerIdentifier'> {}
+interface AuthServiceInstance extends Model<AuthServiceAttributes, AuthServiceCreationAttributes>, AuthServiceAttributes {
+	createdAt?: Date,
+	updatedAt?: Date,
+	deletedAt?: Date
+}
+
+const AuthService: any = sequelize.define<AuthServiceInstance>(
+	'authService',
 	{
 		id: {
 			type: DataTypes.INTEGER,
@@ -37,12 +51,12 @@ const AuthService = sequelize.define(
 	}
 );
 
-AuthService.associate = (models) => {
-	models.users.hasOne(AuthService, {foreignKey: 'userId'});
-	AuthService.belongsTo(models.users);
+AuthService.associate = (models:any) => {
+	models.user.hasOne(AuthService, { foreignKey: 'userId' });
+	AuthService.belongsTo(models.user);
 }
 
-AuthService.getUserByProvider = function(providerType, id: number) {
+AuthService.getUserByProvider = function(providerType: string, id: number) {
 	return AuthService.findOne({
 		where: {
 			providerName: providerType,

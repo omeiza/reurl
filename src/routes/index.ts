@@ -3,17 +3,13 @@
  * Author: https://github.com/omeiza
  */
 
+import { Request, Response } from "express";
 import app from "../app";
-import Link from "./link.route";
 import Auth from "./auth.route";
 import User from "./user.route";
-import { Request, Response } from "express";
+import Link from "./link.route";
 
+app.get('/', (req: Request, res: Response) => { res.json({ message: 'URL Shortener API... 😉' }) });
+app.use('/auth', Auth);
 app.use('/users', User);
 app.use('/links', Link);
-app.use('/auth', Auth);
-app.get('/', (req: Request, res: Response) => {
-	res.json({
-		message: 'URL Shortener API... 😉'
-	})
-});

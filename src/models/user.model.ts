@@ -25,7 +25,7 @@ interface UserInstance extends Model<UserAttributes, UserCreationAttributes>, Us
     deletedAt?: Date
 }
 
-const User = sequelize.define<UserInstance>(
+const User: any = sequelize.define<UserInstance>(
     'user',
     {
         id: {
@@ -44,7 +44,7 @@ const User = sequelize.define<UserInstance>(
         passwordHash: {
             type: DataTypes.STRING,
             allowNull: true,
-            set(value) {
+            set(value: string) {
                 this.setDataValue('passwordHash', hash(value))
             }
         },

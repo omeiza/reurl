@@ -7,9 +7,7 @@ const fs = require('fs');
 const path = require('path');
 const { Sequelize } = require('sequelize');
 const sequelize = require('../utils/sequelize.util');
-const db = {} as {
-    sequelize:
-};
+const db: any = {};
 
 fs
     .readdirSync(__dirname)

@@ -3,12 +3,12 @@
  * Author: https://github.com/omeiza
  */
 
-import express from "express";
-const router = express.Router();
 import { get } from "../controllers/user.controller";
 import authenticate from "../middlewares/authenticate.middleware";
+import express from "express";
+const router = express.Router();
 
 // Get authenticated user details
 router.get('/:username', authenticate, get);
 
-module.exports = router;
+export default router;

@@ -33,14 +33,14 @@ export const generateRandomString = (strLen: number): string | boolean => {
 /**
  * hash to help generate password hash
  * @param str
- * @return { boolean|string }
+ * @return { string }
  */
-export const hash = (str: string): string | boolean | undefined => {
+export const hash = (str: string): string => {
 	if (str.trim().length > 0 && process.env.HASH_ALGO && process.env.HASHING_SECRET) {
 		return crypto.createHmac(process.env.HASH_ALGO, process.env.HASHING_SECRET).update(str).digest('hex');
 	}
 
-	return false;
+	return crypto.createHmac("sha256", "imagineDragon").update(str).digest('hex');
 }
 
 /**

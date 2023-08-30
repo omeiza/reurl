@@ -3,13 +3,14 @@
  * Author: https://github.com/omeiza
  */
 
-const models = {
-    Users: require('./users.model'),
-    Links: require('./links.model'),
-    AuthServices: require('./authServices.model')
+const models: any = {
+    User: require('./users.model'),
+    Link: require('./links.model'),
+    AuthService: require('./authServices.model')
 }
+
 const associate = () => {
-    const aliases = {};
+    const aliases = <any>{};
     for (const key in models) {
         const m = models[key];
         aliases[m.name] = m;
@@ -21,7 +22,7 @@ const associate = () => {
     }
 }
 
-module.exports = {
+export default {
     ...models,
     associate
 }
