@@ -3,10 +3,10 @@
  * Author: https://github.com/omeiza
  */
 
-const fs = require('fs');
-const path = require('path');
-const { Sequelize } = require('sequelize');
-const sequelize = require('../utils/sequelize.util');
+import fs from "fs";
+import { Sequelize } from "sequelize";
+import path from "path";
+import sequelize from "../utils/sequelize.util";
 const db: any = {};
 
 fs
@@ -23,8 +23,7 @@ fs
     });
 
 Object.keys(db).forEach(modelName => {
-    if (db[modelName].association)
-        db[modelName].associate(db);
+    if (db[modelName].association) db[modelName].associate(db);
 });
 
 db.sequelize = sequelize;

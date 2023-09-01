@@ -3,8 +3,8 @@
  * Author: https://github.com/omeiza
  */
 
-require("./routes/index");
-require('./utils/env.util.js');
+import "./routes/index";
+import "./utils/env.util";
 import app from "./app";
 import models from "./models";
 import passport from "passport";
@@ -34,6 +34,6 @@ passport.serializeUser((user, done) => {
 
 // Get user from session
 passport.deserializeUser(async (id, done) => {
-	const user = await User.findById(id);
+	const user = await User.findByPk(id);
 	done(null, user);
 });

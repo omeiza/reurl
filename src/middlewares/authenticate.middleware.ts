@@ -4,8 +4,7 @@
  */
 
 import { Request, Response, NextFunction } from "express";
-import User from "../models/user.model";
-import {UserTypes} from "../types/user";
+import User, { UserInstance } from "../models/user.model";
 
 /**
  * Authenticate user
@@ -17,14 +16,14 @@ import {UserTypes} from "../types/user";
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
 	try {
 		User.findOne({ where: { apiKey: req?.headers['x-api-key'] } })
-			.then((user) => {
+			.then((user: UserInstance) => {
 				if (!user) {
 					return res.status(401).send({
 						status: 'Access denied'
 					});
 				}
 
-				req.user = <UserTypes>user.get({ plain: true });
+				req.user = user.get({ plain: true });
 				next();
 			});
 	} catch (error) {

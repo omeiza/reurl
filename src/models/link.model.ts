@@ -4,7 +4,7 @@
  * Author: https://github.com/omeiza
  */
 
-require('./../utils/env.util.js');
+import "../utils/env.util";
 import User from "./user.model"
 import sequelize from "../utils/sequelize.util";
 import { Model, Optional, DataTypes } from "sequelize";

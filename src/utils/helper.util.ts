@@ -3,7 +3,7 @@
  * Author: https://github.com/omeiza
  */
 
-require('../utils/env.util');
+import "../utils/env.util";
 import * as crypto from "crypto";
 
 /**

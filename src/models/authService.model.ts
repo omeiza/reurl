@@ -62,7 +62,7 @@ AuthService.getUserByProvider = function(providerType: string, id: number) {
 			providerName: providerType,
 			providerIdentifier: id
 		}
-	})
+	});
 }
 
 export default AuthService;

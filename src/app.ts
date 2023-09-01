@@ -3,6 +3,7 @@
  * Author: https://github.com/omeiza
  */
 
+import "./utils/passport.util";
 import * as openapi from "express-openapi-validator";
 import express, { Express, Request, Response } from "express";
 import session from "express-session";
