@@ -35,6 +35,9 @@ app.use(passport.session(undefined));
 // Cors
 app.use(cors());
 
+// Template engine
+app.set('view engine', 'pug');
+
 // OpenAPI validator
 app.use(
 	openapi.middleware({
