@@ -9,7 +9,10 @@ import Auth from "./auth.route";
 import User from "./user.route";
 import Link from "./link.route";
 
-app.get('/', (req: Request, res: Response) => { res.json({ message: 'URL Shortener API... 😉' }) });
-app.use('/auth', Auth);
-app.use('/users', User);
-app.use('/links', Link);
+app.get('/', (req: Request, res: Response) => {
+	res.render('index', { title: 'Hey', message: 'Hello there!' });
+});
+
+// app.use('/auth', Auth);
+// app.use('/users', User);
+// app.use('/links', Link);

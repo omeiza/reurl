@@ -5,6 +5,7 @@
 
 import "./utils/passport.util";
 import * as openapi from "express-openapi-validator";
+import path from "path";
 import express, { Express, Request, Response } from "express";
 import session from "express-session";
 import passport from "passport";
@@ -17,9 +18,17 @@ interface ResponseError extends Error {
 	errors?: { path: string, message: string, errorCode: string }[]
 }
 
-
 // Express app
 const app: Express = express();
+
+// Require static assets from public folder
+app.use(express.static(path.join(__dirname, 'public')));
+
+// Template view directory
+app.set('views', path.join(__dirname, 'views'));
+
+// Template engine
+app.set('view engine', 'pug');
 
 // Session storage for passport
 app.use(session({
@@ -35,9 +44,6 @@ app.use(passport.session(undefined));
 // Cors
 app.use(cors());
 
-// Template engine
-app.set('view engine', 'pug');
-
 // OpenAPI validator
 app.use(
 	openapi.middleware({
@@ -51,13 +57,5 @@ app.use(
 // Incoming request body parser
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: true}));
-
-// Reformat error in response
-app.use((err: ResponseError, req: Request, res: Response) => {
-	res.status(err.status || 500).json({
-		status: err.message,
-		errors: err.errors
-	});
-});
 
 export default app;
