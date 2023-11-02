@@ -1,8 +1,3 @@
-/**
- * User controllers
- * Author: https://github.com/omeiza
- */
-
 import User, { UserInstance } from "../models/user.model";
 import Link, { LinkInstance } from "../models/link.model";
 import { Request, Response } from "express";

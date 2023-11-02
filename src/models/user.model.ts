@@ -1,9 +1,3 @@
-/**
- * Model: User
- * Table: users
- * Author: https://github.com/omeiza
- */
-
 import sequelize from "../utils/sequelize.util";
 import { Model, Optional, DataTypes } from "sequelize";
 import { hash, generateKey } from "../utils/helper.util";

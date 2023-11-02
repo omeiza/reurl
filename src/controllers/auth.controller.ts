@@ -1,8 +1,3 @@
-/**
- * User authentication controller
- * Author: https://github.com/omeiza
- */
-
 const cookie = require("cookie");
 import { Request, Response } from "express";
 import { hash, generateKey } from "../utils/helper.util";

@@ -1,8 +1,3 @@
-/**
- * Get all model associations
- * Author: https://github.com/omeiza
- */
-
 const models: any = {
     User: require('./users.model'),
     Link: require('./links.model'),

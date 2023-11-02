@@ -1,8 +1,3 @@
-/**
- * Link routes
- * Author: https://github.com/omeiza
- */
-
 import express from "express";
 import { links } from "../middlewares/authorize.middleware";
 import { getMany, get, add, update, deleteLink } from "../controllers/link.controller";

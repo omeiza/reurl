@@ -1,8 +1,3 @@
-/**
- * Authorization middleware
- * Author: https://github.com/omeiza
- */
-
 import Link from "../models/link.model";
 
 /**

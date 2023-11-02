@@ -1,8 +1,3 @@
-/**
- * Authentication middleware
- * Author: https://github.com/omeiza
- */
-
 import { Request, Response, NextFunction } from "express";
 import User, { UserInstance } from "../models/user.model";
 

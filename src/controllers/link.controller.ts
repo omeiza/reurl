@@ -1,8 +1,3 @@
-/**
- * Link controllers
- * Author: https://github.com/omeiza
- */
-
 import { uniqueID } from "../utils/helper.util";
 import Sequelize from "sequelize";
 import { Request, Response } from "express";

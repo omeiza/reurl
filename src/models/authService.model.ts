@@ -1,9 +1,3 @@
-/**
- * Model: AuthService
- * Table: authService
- * Author: https://github.com/omeiza
- */
-
 import { Model, Optional, DataTypes } from "sequelize";
 import sequelize from "../utils/sequelize.util";
 import User from "./user.model";
@@ -22,7 +16,7 @@ export interface AuthServiceInstance extends Model<AuthServiceAttributes, AuthSe
 	deletedAt?: Date
 }
 
-const AuthService: any = sequelize.define<AuthServiceInstance>(
+const AuthService: any = sequelize.define<AuthServiceInstance> (
 	'authService',
 	{
 		id: {

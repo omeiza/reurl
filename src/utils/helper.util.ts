@@ -1,8 +1,3 @@
-/**
- * Helper/Utility functions
- * Author: https://github.com/omeiza
- */
-
 import "../utils/env.util";
 import * as crypto from "crypto";
 

@@ -1,9 +1,3 @@
-/**
- * Model: Link
- * Table: link
- * Author: https://github.com/omeiza
- */
-
 import "../utils/env.util";
 import User from "./user.model"
 import sequelize from "../utils/sequelize.util";

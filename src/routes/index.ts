@@ -1,8 +1,3 @@
-/**
- * Get new instance Sequelize ORM object - to be used across the application
- * Author: https://github.com/omeiza
- */
-
 import { Request, Response } from "express";
 import app from "../app";
 import Auth from "./auth.route";

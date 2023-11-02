@@ -1,8 +1,3 @@
-/**
- * Consolidates all models and attach them to their associations
- * Author: https://github.com/omeiza
- */
-
 import fs from "fs";
 import { Sequelize } from "sequelize";
 import path from "path";

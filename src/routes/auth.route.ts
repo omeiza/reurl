@@ -1,8 +1,3 @@
-/**
- * Authentication routes
- * Author: https://github.com/omeiza
- */
-
 import express from "express";
 import passport from "passport";
 import { signup, login, loginSuccess, loginFailure } from "../controllers/auth.controller";

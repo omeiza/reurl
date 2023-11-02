@@ -1,9 +1,3 @@
-/**
- * Passport: Google Strategy
- * Author: https://github.com/omeiza
- */
-
-
 import passport from "passport";
 import User, { UserCreationAttributes, UserInstance } from "../models/user.model";
 import AuthServices, { AuthServiceInstance } from "../models/authService.model";

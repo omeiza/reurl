@@ -1,8 +1,3 @@
-/**
- * Database config
- * Author: https://github.com/omeiza
- */
-
 const env = process.env;
 export default {
     host: env.DB_HOST ?? '127.0.0.1',
