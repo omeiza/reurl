@@ -4,22 +4,11 @@ import { signup, login, loginSuccess, loginFailure } from "../controllers/auth.c
 
 const router = express.Router();
 
-// Add new user
 router.put("/signup", signup);
-
-// Log user in, and get API key
 router.post("/login", login);
-
-// For social: login success
 router.get("/login/success", loginSuccess);
-
-// For social: login failed
 router.get("/login/failed", loginFailure);
 
-/**
- * 1. GET google
- * 2. GET google callback
- */
 router.get("/google",
 	passport.authenticate("google", { scope: ["email", "profile"] }, () => { return null; })
 );

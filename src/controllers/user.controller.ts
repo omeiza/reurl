@@ -7,12 +7,6 @@ interface UserRequest extends Request {
 	user?: UserInstance
 }
 
-/**
- * Get existing user
- * @param req
- * @param res
- * @return {Promise<*>}
- */
 export const get = async (req: UserRequest, res: Response) => {
 	try {
 		if (req.user) {

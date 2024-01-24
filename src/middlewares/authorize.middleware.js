@@ -1,11 +1,5 @@
 import Link from "../models/link.model";
 
-/**
- * @param req
- * @param res
- * @param next
- * @return {Promise<void>}
- */
 export const links = async (req, res, next) => {
 	try {
 		const link = await Link.findOne({

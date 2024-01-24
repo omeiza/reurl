@@ -1,8 +1,3 @@
-/**
- * Application bootstrap/start-point
- * Author: https://github.com/omeiza
- */
-
 import "./routes/index";
 import "./utils/env.util";
 import app from "./app";
@@ -27,12 +22,10 @@ const port = process.env.PORT ?? '4001';
 	}
 })();
 
-// Save user object to session
 passport.serializeUser((user, done) => {
 	done(null, user);
 });
 
-// Get user from session
 passport.deserializeUser(async (id, done) => {
 	const user = await User.findByPk(id);
 	done(null, user);

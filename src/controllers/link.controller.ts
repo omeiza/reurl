@@ -11,14 +11,6 @@ interface UserRequest extends Request {
 	user?: UserInstance
 }
 
-/**
- * getMany lists out links that matches a particular search criteria
- * The criteria are -> search query, count (perPage), page, status, order, orderBy
- * Returns an array of link objects
- * @param req
- * @param res
- * @return {JSON}
- */
 export const getMany = (req: UserRequest, res: Response) => {
 	try {
 		const perPage = req.query.count ? parseInt(<string>req.query.count) : 8;
@@ -72,13 +64,6 @@ export const getMany = (req: UserRequest, res: Response) => {
 	}
 }
 
-/**
- * getLink gets a single link
- * Returns a link
- * @param req
- * @param res
- * @return {JSON}
- */
 export const get = (req: Request, res: Response) => {
 	try {
 		Link.findByPk(req.params.id)
@@ -99,13 +84,6 @@ export const get = (req: Request, res: Response) => {
 	}
 }
 
-/**
- * Creates a short link
- * Returns the newly created short link id
- * @param req
- * @param res
- * @return {JSON}
- */
 export const add = (req: UserRequest, res: Response) => {
 	try {
 		const id = uniqueID(6);
@@ -139,12 +117,6 @@ export const add = (req: UserRequest, res: Response) => {
 	}
 }
 
-/**
- * Update specific link
- * @param req
- * @param res
- * @return {void}
- */
 export const update = (req: Request, res:Response) => {
 	try {
 		const args = {} as { status: string, title: string, longUrl: string };
@@ -173,12 +145,6 @@ export const update = (req: Request, res:Response) => {
 	}
 }
 
-/**
- * Delete specific link
- * @param req
- * @param res
- * @return {void}
- */
 export const deleteLink = (req: Request, res: Response) => {
 	try {
 		Link.destroy({

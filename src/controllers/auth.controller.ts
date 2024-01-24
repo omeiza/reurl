@@ -4,12 +4,6 @@ import { hash, generateKey } from "../utils/helper.util";
 import User, {UserCreationAttributes, UserInstance} from "../models/user.model";
 import AuthService from "../models/authService.model";
 
-/**
- * Add new user
- * @param req
- * @param res
- * @return {Promise<*>}
- */
 export const signup = async (req: Request, res: Response) => {
 	try {
 		const [user, created] = await User.findOrCreate({
@@ -40,12 +34,6 @@ export const signup = async (req: Request, res: Response) => {
 	}
 }
 
-/**
- * Login
- * @param req
- * @param res
- * @return {JSON}
- */
 export const login = async (req: Request, res: Response) => {
 	try {
 		const args = <UserCreationAttributes>{};
@@ -85,10 +73,6 @@ export const login = async (req: Request, res: Response) => {
 	}
 }
 
-/**
- * @param req
- * @param res
- */
 export const loginSuccess = (req: Request, res: Response): Response | boolean => {
 	if (req.user && process.env.SITE_URL) {
 		res.setHeader('Set-Cookie', cookie.serialize('shortener_key', String(req.user), {
@@ -105,10 +89,6 @@ export const loginSuccess = (req: Request, res: Response): Response | boolean =>
 	return false;
 }
 
-/**
- * @param req
- * @param res
- */
 export const loginFailure = (req: Request, res: Response): void => {
 	res.status(401).json({
 		status: "Access Denied!",

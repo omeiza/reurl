@@ -1,13 +1,6 @@
 import { Request, Response, NextFunction } from "express";
 import User, { UserInstance } from "../models/user.model";
 
-/**
- * Authenticate user
- * @param req
- * @param res
- * @param next
- * @return {void}
- */
 const authenticate = (req: Request, res: Response, next: NextFunction) => {
 	try {
 		User.findOne({ where: { apiKey: req?.headers['x-api-key'] } })
